@@ -1,27 +1,23 @@
 # Cobaltic
-Easy to use Fortnite downloader (through manifests)
+Cobaltic is an easy to use Fortnite downloader, using manifests. Made by JWHAZY (jacksta) to fill the gap downloading old Fortnite versions.
 
-## Manifests
-Manifest IDs from these repositories:
+## Need help?
+Go [here](https://github.com/jackstadevelopment/cobaltic/blob/master/HELP.md). If your issue isn't resolved head to the Discord server below.
 
-* [polynite/fn-releases](https://github.com/polynite/fn-releases)
-
-* [VastBlast/FortniteManifestArchive](https://github.com/VastBlast/FortniteManifestArchive)
-
-These can be used with Cobaltic/splash to download game files.
-
-## Building
+## Want to build Cobaltic yourself?
 Clone, install NuGet packages, build. However if you encounter issues contact me below.
 
-## Packages/Software used
-[AdonisUI](https://benruehl.github.io/adonis-ui/) by Ben Ruehl
+## Credits
+* [splash](https://github.com/polynite/splash) by [Polynite](https://github.com/polynite)
+* [fn-releases](https://github.com/polynite/fn-releases) by [Polynite](https://github.com/polynite)
+* [VastBlast/FortniteManifestArchive](https://github.com/VastBlast/FortniteManifestArchive)
 
-[Splash](https://github.com/polynite/splash) by Polynite
+Without these amazing people retrieving old Fortnite versions would be rather difficult. Thank you so much. ❤️
+Special thanks: [AdonisUI](https://benruehl.github.io/adonis-ui/) by Ben Ruehl.
 
 ## License
 Cobaltic uses the GNU GPLv3 license. You may view it [here](https://github.com/jwhazy/cobaltic/blob/master/LICENSE).
 
 ## Contact
+[jacksta's discord](https://discord.gg/jvaBE3vVBe)
 jacksta@pm.me
-
-[jacksta#7562](https://discord.gg/jvaBE3vVBe)

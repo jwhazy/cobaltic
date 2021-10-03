@@ -13,7 +13,6 @@ namespace Cobaltic
         public MainWindow()
         {
             InitializeComponent();
-            main = this;
 
             Loaded += (s, e) =>
             {
@@ -23,18 +22,32 @@ namespace Cobaltic
             };
         }
 
-        internal static MainWindow main;
 
         private void InstallButton_Click(object sender, RoutedEventArgs e)
         {
             var executable = System.IO.Directory.GetCurrentDirectory() + "\\splash.exe";
-            var arguments = "-manifest " + ManifestID + " -install-dir " + Directory;
+            var arguments = "-manifest " + ManifestBox.Text + " -install-dir " + DirectoryBox.Text;
 
-            using (var client = new WebClient())
+            if ((DirectoryBox.Text == "") || (ManifestBox.Text == ""))
             {
-                client.DownloadFile("https://github.com/polynite/splash/releases/download/v1.1.5/splash_1.1.5_windows_amd64.exe", "splash.exe");
+                System.Windows.MessageBox.Show("Make sure you have selected a correct manifest ID and selected a folder.");
+                return;
             }
-            Process.Start(executable, arguments);
+
+            try
+            {
+                using (var client = new WebClient())
+                {
+                    client.DownloadFile("https://github.com/polynite/splash/releases/download/v1.1.5/splash_1.1.5_windows_amd64.exe", "splash.exe");
+                }
+                Process.Start("cmd.exe", "/C" + executable + " " + arguments + " & echo Thank you for using Cobaltic by JWHAZY (https://github.com/jackstadevelopment/). & echo If an error occurred, try a different manifest ID. & pause");
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Something went wrong. If this continues report it in the Discord server. Here is the information: " + ex.ToString());
+                throw new Exception(ex.ToString());
+            }
+
         }
 
         private void BrowseButton_Click(object sender, RoutedEventArgs e)
@@ -45,35 +58,28 @@ namespace Cobaltic
 
                 if (!string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
-                    Directory = fbd.SelectedPath;
+                    DirectoryBox.Text = fbd.SelectedPath;
                 }
                 else
                 {
-                    Directory = "Please try again.";
+                    DirectoryBox.Text = "Please try again.";
                 }
             }
         }
 
-        internal string Directory
+        private void ManifestButton_Click(object sender, RoutedEventArgs e)
         {
-            get { return DirectoryBox.Text.ToString(); }
-            set { Dispatcher.Invoke(new Action(() => { DirectoryBox.Text = value; })); }
+            Process.Start("https://github.com/polynite/fn-releases/blob/master/README.md");
         }
 
-        internal string ManifestID
+        private void ManifestText_Click(object sender, MouseButtonEventArgs e)
         {
-            get { return ManifestBox.Text.ToString(); }
-            set { Dispatcher.Invoke(new Action(() => { ManifestBox.Text = value; })); }
+            Process.Start("https://github.com/jackstadevelopment/cobaltic/blob/master/HELP.md");
         }
 
         private void DirectoryBoxReset(object sender, RoutedEventArgs e)
         {
-            Directory = "";
-        }
-
-        private void ManifestList_Click(object sender, MouseButtonEventArgs e)
-        {
-            Process.Start("https://github.com/polynite/fn-releases");
+            DirectoryBox.Text = "";
         }
     }
 }
