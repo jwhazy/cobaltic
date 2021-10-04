@@ -1,5 +1,5 @@
 # Cobaltic
-Cobaltic is an easy to use Fortnite downloader, using manifests. Made by JWHAZY (jacksta) to fill the gap downloading old Fortnite versions.
+Cobaltic is an easy to use Fortnite downloader, using manifests. Made by JWHAZY (jacksta) to make downloading old Fortnite versions easier.
 
 ## Need help?
 Go [here](https://github.com/jackstadevelopment/cobaltic/blob/master/HELP.md). If your issue isn't resolved head to the Discord server below.
@@ -9,8 +9,8 @@ Clone, install NuGet packages, build. However if you encounter issues contact me
 
 ## Credits
 * [splash](https://github.com/polynite/splash) by [Polynite](https://github.com/polynite)
-* [fn-releases](https://github.com/polynite/fn-releases) by [Polynite](https://github.com/polynite)
-* [VastBlast/FortniteManifestArchive](https://github.com/VastBlast/FortniteManifestArchive)
+* [fn-releases](https://github.com/polynite/fn-releases) by [Polynite + contributors](https://github.com/polynite)
+* [FortniteManifestArchive](https://github.com/VastBlast/FortniteManifestArchive) by [VastBlast + contributors](https://github.com/VastBlast/)
 
 Without these amazing people retrieving old Fortnite versions would be rather difficult. Thank you so much. ❤️
 Special thanks: [AdonisUI](https://benruehl.github.io/adonis-ui/) by Ben Ruehl.
