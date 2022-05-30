@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: 'Inter';
+    font-weight: 100 900;
+    src: url('../public/inter.woff2') format('woff');
+}
+
+body {
+    font-family: Inter;
+    @apply text-white;
+    @apply bg-zinc-900;
+    @apply scroll-smooth;
+}
+
+@layer base {
+    .h0 {
+        @apply text-3xl font-bold md:text-5xl;
+    }
+
+    h1,
+    .h1 {
+        @apply text-2xl font-bold md:text-4xl;
+    }
+
+    h2,
+    .h2 {
+        @apply text-xl font-bold md:text-3xl;
+    }
+
+    h3,
+    .h3 {
+        @apply text-lg font-bold md:text-2xl;
+    }
+
+    h4,
+    .h4 {
+        @apply text-base font-bold md:text-lg;
+    }
+
+    body,
+    .p {
+        @apply text-sm md:text-base;
+    }
+
+    .layout {
+        max-width: 68.75rem;
+        @apply mx-auto w-11/12;
+    }
+
+    .bg-dark a.custom-link {
+        @apply border-gray-200 hover:border-gray-200/0;
+    }
+
+    .min-h-main {
+        @apply min-h-[calc(100vh-56px)];
+    }
+}
+
+/* 
+
+    Spinner by tobiasaslin
+    https://github.com/tobiasahlin/SpinKit
+
+*/
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    background-color: grey;
+    -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
+    animation: sk-rotateplane 1.2s infinite ease-in-out;
+}
+
+@-webkit-keyframes sk-rotateplane {
+    0% {
+        -webkit-transform: perspective(120px);
+    }
+    50% {
+        -webkit-transform: perspective(120px) rotateY(180deg);
+    }
+    100% {
+        -webkit-transform: perspective(120px) rotateY(180deg) rotateX(180deg);
+    }
+}
+
+@keyframes sk-rotateplane {
+    0% {
+        transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+        -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+    }
+    50% {
+        transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+        -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+    }
+    100% {
+        transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+        -webkit-transform: perspective(120px) rotateX(-180deg)
+            rotateY(-179.9deg);
+    }
+}
