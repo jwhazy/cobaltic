@@ -13,7 +13,11 @@ body {
     @apply text-white;
     @apply bg-zinc-900;
     @apply scroll-smooth;
+    @apply m-0;
+    @apply h-0;
+    @apply overflow-hidden;
 }
+
 
 @layer base {
     .h0 {

@@ -1,9 +1,6 @@
 import { appWindow } from "@tauri-apps/api/window";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faWindowMinimize,
-  faWindowClose,
-} from "@fortawesome/free-solid-svg-icons";
+import { faWindowMinimize, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import Button from "./Button";
 
@@ -17,7 +14,7 @@ function Titlebar() {
   return (
     <header
       data-tauri-drag-region
-      className="pl-2 flex justify-between backdrop-filter backdrop-blur-3xl top-0 z-50 drag h-8 sticky bg-opacity-50 w-full"
+      className="pl-2 flex justify-between backdrop-filter backdrop-blur-3xl top-0 z-50 drag h-8 sticky bg-black bg-opacity-25 w-full flex-shrink-0"
     >
       <div className=" flex flex-row no-drag">
         <Button onClick={() => navigate("/")}>
@@ -29,7 +26,7 @@ function Titlebar() {
           <FontAwesomeIcon icon={faWindowMinimize} />
         </Button>
         <Button onClick={exit}>
-          <FontAwesomeIcon icon={faWindowClose} />
+          <FontAwesomeIcon icon={faXmark} />
         </Button>
       </div>
     </header>
