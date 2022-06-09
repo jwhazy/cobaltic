@@ -4,11 +4,10 @@
 )]
 
 use std::path::Path;
-mod native;
 
 fn main() {
   tauri::Builder::default()
-    .invoke_handler(tauri::generate_handler![check_directory_exists])
+    .invoke_handler(tauri::generate_handler![check_directory_exists, get_manifests])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");
 }

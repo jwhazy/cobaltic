@@ -2,12 +2,12 @@
   "$schema": "..\\node_modules/@tauri-apps/cli\\schema.json",
   "build": {
     "beforeBuildCommand": "yarn build",
-    "beforeDevCommand": "yarn cross-env BROWSER=none yarn start",
+    "beforeDevCommand": "yarn vite",
     "devPath": "http://localhost:3000",
     "distDir": "../build"
   },
   "package": {
-    "productName": "cobaltic",
+    "productName": "Cobaltic",
     "version": "2.0.0-dev"
   },
   "tauri": {
@@ -16,7 +16,7 @@
     },
     "bundle": {
       "active": true,
-      "category": "DeveloperTool",
+      "category": "Utility",
       "copyright": "",
       "deb": {
         "depends": []
