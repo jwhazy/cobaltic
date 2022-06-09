@@ -14,13 +14,7 @@
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
-  "extends": [
-    "react-app",
-    "react-app/jest",
-    "airbnb",
-    "plugin:jsx-a11y/recommended",
-    "prettier"
-  ],
+  "extends": ["react-app", "airbnb", "plugin:jsx-a11y/recommended", "prettier"],
   "plugins": ["react", "jsx-a11y", "prettier"],
   "rules": {
     "react/destructuring-assignment": "off",

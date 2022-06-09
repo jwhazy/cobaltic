@@ -1,9 +1,3 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable react/no-unescaped-entities */
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable jsx-a11y/anchor-is-valid */
-
 import { useContext, useEffect } from "react";
 import { AppContext } from "../../components/Context";
 import Modal from "../../components/Modal";
