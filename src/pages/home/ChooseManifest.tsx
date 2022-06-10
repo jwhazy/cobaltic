@@ -8,8 +8,8 @@ import Spinner from "../../components/Spinner";
 import Manifest from "../../components/Manifest";
 
 export default function ChooseManifest() {
-  const { season } = React.useContext(AppContext);
-  const { setState, setActiveManifest } = React.useContext(AppContext);
+  const { setState, manifests, setActiveManifest } =
+    React.useContext(AppContext);
 
   return (
     <div className="flex flex-col justify-between">
@@ -36,17 +36,19 @@ export default function ChooseManifest() {
           Click here.
         </a>
       </p>
-      <div className="my-8 flex flex-row flex-wrap flex-grow-0 align-center">
-        {season ? (
-          Object.keys(season).map((chosenManifest) => {
-            const manifest = season[chosenManifest as unknown as number];
+      <div className="my-8 flex flex-row flex-wrap flex-grow-0 align-center justify-center">
+        {manifests ? (
+          Object.keys(manifests).map((manifest) => {
+            const data = manifests[manifest as unknown as number];
             return (
               <Manifest
-                key={chosenManifest}
-                title={manifest.name || manifest.id}
-                subtitle={manifest.id}
+                key={data.name}
+                title={data.name || data.id}
+                icon={data?.icon || "fortnitep.jpg"}
+                banner={data?.banner || "fortniteb.jfif"}
+                subtitle={data.id}
                 onClick={() => {
-                  setActiveManifest?.(manifest);
+                  setActiveManifest?.(data);
                   setState?.(State.FINALIZING);
                 }}
               />

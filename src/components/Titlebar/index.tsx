@@ -2,7 +2,7 @@ import { appWindow } from "@tauri-apps/api/window";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowMinimize, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import Button from "./Button";
+import TitlebarItem from "./Item";
 
 function Titlebar() {
   const navigate = useNavigate();
@@ -17,17 +17,17 @@ function Titlebar() {
       className="pl-2 flex justify-between backdrop-filter backdrop-blur-3xl top-0 z-50 drag h-8 sticky bg-black bg-opacity-25 w-full flex-shrink-0"
     >
       <div className=" flex flex-row no-drag">
-        <Button onClick={() => navigate("/")}>
+        <TitlebarItem onClick={() => navigate("/")}>
           <p className="font-black text-lg px-2 ">COBALTIC</p>
-        </Button>
+        </TitlebarItem>
       </div>
       <div className="ml-auto no-drag flex flex-row bg-header">
-        <Button onClick={minimize}>
+        <TitlebarItem onClick={minimize}>
           <FontAwesomeIcon icon={faWindowMinimize} />
-        </Button>
-        <Button onClick={exit}>
+        </TitlebarItem>
+        <TitlebarItem onClick={exit}>
           <FontAwesomeIcon icon={faXmark} />
-        </Button>
+        </TitlebarItem>
       </div>
     </header>
   );

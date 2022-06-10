@@ -1,10 +1,10 @@
 import { ChangeEvent } from "react";
 
-/* eslint-disable no-unused-vars */
 type Props = {
   placeholder: string;
   value?: string;
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  // eslint-disable-next-line no-unused-vars
+  onChange?: (_e: ChangeEvent<HTMLInputElement>) => void;
   className?: string;
 };
 

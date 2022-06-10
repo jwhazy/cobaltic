@@ -20,13 +20,23 @@ export type Props = {
   newTab?: boolean;
   className?: string;
   children?: ReactNode;
+  type?: "normal" | "long";
 };
 
 function Button(props: Props) {
-  const className = clsxm(
-    "py-2 px-3 border bg-opacity-10 hover:bg-opacity-25 bg-black text-white transition border-gray-700 placeholder-gray-400 hover:outline-none hover:ring-1 hover:ring-gray-300 hover:ring-opacity-50 shadow-sm disabled:text-gray-500 mt-1 block rounded-l-md rounded-md",
-    props.className
-  );
+  let className: string;
+
+  if (props.type === "long") {
+    className = clsxm(
+      "ml-2 py-2 px-12 border bg-opacity-10 hover:bg-opacity-25 bg-black text-white transition border-gray-700 placeholder-gray-400 hover:outline-none hover:ring-1 hover:ring-gray-300 hover:ring-opacity-50 shadow-sm disabled:text-gray-500 mt-1 block rounded-l-md rounded-md",
+      props.className
+    );
+  } else {
+    className = clsxm(
+      "py-2 px-3 border bg-opacity-10 hover:bg-opacity-25 bg-black text-white transition border-gray-700 placeholder-gray-400 hover:outline-none hover:ring-1 hover:ring-gray-300 hover:ring-opacity-50 shadow-sm disabled:text-gray-500 mt-1 block rounded-l-md rounded-md",
+      props.className
+    );
+  }
 
   return (
     <button type="button" className={className} onClick={props.onClick}>

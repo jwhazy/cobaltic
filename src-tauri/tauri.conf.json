@@ -57,11 +57,11 @@
       {
         "fullscreen": false,
         "center": true,
-        "height": 700,
+        "height": 785,
         "minHeight": 500,
         "resizable": true,
         "title": "Cobaltic",
-        "width": 1320,
+        "width": 1350,
         "minWidth": 875,
         "decorations": false
       }

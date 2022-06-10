@@ -5,7 +5,7 @@
 @font-face {
     font-family: 'Inter';
     font-weight: 100 900;
-    src: url('inter.woff2') format('woff');
+    src: url('/src/assets/inter.woff2') format('woff');
 }
 
 body {
@@ -15,7 +15,6 @@ body {
     @apply scroll-smooth;
     @apply m-0;
     @apply h-0;
-    @apply overflow-hidden;
 }
 
 

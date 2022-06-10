@@ -3,16 +3,17 @@ import { createContext, ReactNode, useMemo, useState } from "react";
 import Modal from "../../types/Modal";
 import Manifest from "../../types/Manifest";
 import { State, Method } from "../../utils/constants";
+import Season from "../../types/Season";
 
 interface DefaultContext {
   activeManifest?: Manifest;
   setActiveManifest?: (manifest: Manifest) => void;
-  manifests?: Record<string, Manifest[]>;
-  setManifests?: (manifests: Record<string, Manifest[]>) => void;
+  seasons?: Record<string, Season>;
+  setSeasons?: (manifests: Record<string, Season>) => void;
   directory?: string;
   setDirectory?: (directory: string) => void;
-  season?: Manifest[];
-  setSeason?: (season: Manifest[]) => void;
+  manifests?: Manifest[];
+  setManifests?: (season: Manifest[]) => void;
   state?: State;
   setState?: (state: State) => void;
   method?: Method;
@@ -30,9 +31,9 @@ type Props = {
 function AppProvider({ children }: Props) {
   const [directory, setDirectory] = useState("");
 
-  const [manifests, setManifests] = useState<Record<string, Manifest[]>>({});
+  const [manifests, setManifests] = useState<Manifest[]>([]);
 
-  const [season, setSeason] = useState<Manifest[]>();
+  const [seasons, setSeasons] = useState<Record<string, Season>>();
 
   const [activeManifest, setActiveManifest] = useState<Manifest>();
 
@@ -50,8 +51,8 @@ function AppProvider({ children }: Props) {
       setManifests,
       directory,
       setDirectory,
-      season,
-      setSeason,
+      seasons,
+      setSeasons,
       state,
       setState,
       method,
@@ -59,7 +60,7 @@ function AppProvider({ children }: Props) {
       modal,
       setModal,
     }),
-    [modal, method, state, activeManifest, season, manifests, directory]
+    [activeManifest, directory, manifests, method, modal, seasons, state]
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
