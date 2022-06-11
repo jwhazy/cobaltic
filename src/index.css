@@ -15,8 +15,13 @@ body {
     @apply scroll-smooth;
     @apply m-0;
     @apply h-0;
+    @apply select-none
 }
 
+img {
+    @apply select-none;
+    @apply pointer-events-none;
+}
 
 @layer base {
     .h0 {

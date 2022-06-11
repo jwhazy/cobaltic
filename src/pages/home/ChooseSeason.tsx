@@ -67,9 +67,9 @@ export default function ChooseSeason() {
               const data = seasons[season];
               return (
                 <SeasonItem
-                  key={data.short_name}
+                  key={data.shortName}
                   icon={data.icon || "fortniteb.png"}
-                  title={data.season_name || "null"}
+                  title={data.seasonName || "null"}
                   banner={data.banner || "fortniteb.png"}
                   onClick={() => {
                     setManifests?.(data.manifests);

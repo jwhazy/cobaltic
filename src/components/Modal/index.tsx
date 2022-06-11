@@ -8,7 +8,7 @@ function ModalComponent({ title, message, children, type }: Modal) {
   const { modal } = React.useContext(AppContext);
   return (
     <div
-      className={`w-1/3 absolute bottom-0 right-0 border bg-opacity-40 px-6 py-4 mb-4 mr-4 text-white animate__animated animate__fadeIn transition border-gray-700  shadow-sm items-center rounded-3xl backdrop-filter backdrop-blur-xl opacity-50 ${
+      className={`w-1/3 fixed bottom-0 right-0 border bg-opacity-40 px-6 py-4 mb-4 mr-4  text-white animate__animated animate__fadeIn transition border-gray-700  shadow-sm items-center rounded-3xl backdrop-filter backdrop-blur-xl ${
         type === "error" ? "bg-red-500" : "bg-black"
       }`}
     >
