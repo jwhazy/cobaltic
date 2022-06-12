@@ -19,6 +19,7 @@ function ModalComponent({ title, message, children, type }: Modal) {
       <div>{children}</div>
       <div className="drop-shadow-md pt-2 flex justify-end">
         <Button
+          type="long"
           onClick={() =>
             setModal
               ? setModal({

@@ -1,6 +1,7 @@
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext } from "react";
+import { shell } from "@tauri-apps/api";
 import { State } from "../../utils/constants";
 import { AppContext } from "../../components/Context";
 import Button from "../../components/Button";
@@ -64,15 +65,29 @@ export default function ChooseSeason() {
         <div className="flex flex-row flex-wrap flex-grow-0 align-center justify-center">
           {seasons ? (
             Object.keys(seasons).map((season) => {
-              const data = seasons[season];
+              const { shortName, icon, seasonName, banner, manifests } =
+                seasons[season];
+
+              // eslint-disable-next-line no-nested-ternary
+              const c = shortName?.includes("c3")
+                ? "Chapter 3"
+                : shortName?.includes("c2")
+                ? "Chapter 2"
+                : "Chapter 1";
+
+              const s = seasonName?.includes("Chapter")
+                ? seasonName.replace(/C.*,/, "")
+                : seasonName;
+
               return (
                 <SeasonItem
-                  key={data.shortName}
-                  icon={data.icon || "fortniteb.png"}
-                  title={data.seasonName || "null"}
-                  banner={data.banner || "fortniteb.png"}
+                  key={shortName}
+                  icon={icon || "fortniteb.png"}
+                  season={s || "null"}
+                  chapter={c}
+                  banner={banner || "fortniteb.png"}
                   onClick={() => {
-                    setManifests?.(data.manifests);
+                    setManifests?.(manifests);
                     setState?.(State.CHOOSING_MANIFEST);
                   }}
                 />
@@ -81,6 +96,15 @@ export default function ChooseSeason() {
           ) : (
             <Spinner />
           )}
+          <SeasonItem
+            key={null}
+            icon="fortniteb.png"
+            season="Other Builds"
+            banner="fortniteb.png"
+            onClick={() => {
+              shell.open("https://github.com/notsamicc/Fortnite-Builds");
+            }}
+          />
         </div>
       </div>
     </div>

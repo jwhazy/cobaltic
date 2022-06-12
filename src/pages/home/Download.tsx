@@ -1,8 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext } from "react";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { invoke } from "@tauri-apps/api";
 import { AppContext } from "../../components/Context";
 import { State } from "../../utils/constants";
+import Button from "../../components/Button";
 
 export default function Download() {
   const { directory, method, activeManifest, setState } =
@@ -38,6 +40,9 @@ export default function Download() {
           <p>{method}</p>
           <h3>Manifest identifer</h3>
           <p>{activeManifest?.id}</p>
+          <Button onClick={() => invoke("splash_downloader")} className="mt-4">
+            Download Splash
+          </Button>
         </div>
       </div>
     </div>
