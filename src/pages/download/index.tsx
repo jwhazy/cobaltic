@@ -46,7 +46,7 @@ export default function Download() {
         <div className="flex items-center space-x-16">
           <div>
             <img
-              src={`/src/public/${activeManifest?.icon || "fortnitep.jpg"}`}
+              src={`/${activeManifest?.icon || "fortnitep.jpg"}`}
               height={256}
               width={256}
               alt={activeManifest?.version}
@@ -83,7 +83,7 @@ export default function Download() {
       <div className="flex items-center space-x-16">
         <div>
           <img
-            src={`/src/public/${activeManifest?.icon || "fortnitep.jpg"}`}
+            src={`/${activeManifest?.icon || "fortnitep.jpg"}`}
             height={256}
             width={256}
             alt={activeManifest?.version}

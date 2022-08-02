@@ -5,7 +5,7 @@
 @font-face {
   font-family: "Inter";
   font-weight: 100 900;
-  src: url("/src/public//inter.woff2") format("woff");
+  src: url("/inter.woff2") format("woff");
 }
 
 body {

@@ -1,5 +1,3 @@
-import fortnite from "../public/c2s2p.jpg";
-
 export type Props = {
   title: string;
   subtitle: string;
@@ -15,7 +13,7 @@ function ManifestItem({ title, subtitle, onClick, icon }: Props) {
       onClick={onClick}
     >
       <img
-        src={`/src/public/${icon}` || fortnite}
+        src={`/${icon || "c1s1p.jpg"}`}
         height={96}
         width={96}
         className="rounded-l-3xl"
