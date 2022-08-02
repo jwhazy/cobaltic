@@ -1,5 +1,7 @@
 /* eslint-disable no-unused-vars */
-import { createContext, ReactNode, useMemo, useState } from "react";
+import { createContext, ReactNode, useMemo, useState, useEffect } from "react";
+import { invoke } from "@tauri-apps/api";
+import { useNavigate } from "react-router-dom";
 import Modal from "../../types/Modal";
 import Manifest from "../../types/Manifest";
 import { State, Method } from "../../utils/constants";
@@ -62,6 +64,12 @@ function AppProvider({ children }: Props) {
     }),
     [activeManifest, directory, manifests, method, modal, seasons, state]
   );
+
+  useEffect(() => {
+    invoke("get_manifests").then((m) => {
+      setSeasons?.(JSON.parse(m as string) as Record<string, Season>);
+    });
+  }, [setSeasons]);
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }

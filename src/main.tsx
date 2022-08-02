@@ -6,6 +6,9 @@ import ModalProvider from "./components/Modal/Provider";
 import Titlebar from "./components/Titlebar";
 import "./index.css";
 import NotFound from "./pages/404";
+import Download from "./pages/download";
+import Finalize from "./pages/finalize";
+import Manifest from "./pages/manifest";
 import Home from "./pages/home";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
@@ -14,10 +17,15 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <Titlebar />
       <div className="h-full w-full flex flex-col overflow-x-hidden">
         <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <div className="animate__animated animate__fadeInUp px-32" id="home">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/manifest" element={<Manifest />} />
+            <Route path="/finalize" element={<Finalize />} />
+            <Route path="/download" element={<Download />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
         <ModalProvider />
       </div>
     </BrowserRouter>

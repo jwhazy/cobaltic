@@ -2,15 +2,18 @@ import { faArrowLeft, faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { dialog, invoke } from "@tauri-apps/api";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
 import { AppContext } from "../../components/Context";
 import Input from "../../components/Input";
 import ModalProvider from "../../components/Modal/Provider";
 import { Method, State } from "../../utils/constants";
 
-export default function Finalize() {
+function FinalizePage() {
   const { directory, setDirectory, setState, setMethod, setModal } =
     React.useContext(AppContext);
+
+  const navigate = useNavigate();
 
   const getDirectory = () => {
     dialog.open({ directory: true }).then((value) => {
@@ -32,6 +35,7 @@ export default function Finalize() {
           throw new Error("Built-in downloading is not supported yet.");
         setMethod?.(m);
         setState?.(State.DOWNLOADING);
+        navigate("/download");
       } else {
         throw new Error("The selected directory does not exist.");
       }
@@ -53,6 +57,7 @@ export default function Finalize() {
           className="flex items-center space-x-2 text-gray-200 cursor-pointer"
           onClick={() => {
             setState?.(State.CHOOSING_MANIFEST);
+            navigate("/manifest");
           }}
         >
           <FontAwesomeIcon icon={faArrowLeft} />
@@ -111,3 +116,5 @@ export default function Finalize() {
     </>
   );
 }
+
+export default FinalizePage;

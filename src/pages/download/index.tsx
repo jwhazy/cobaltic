@@ -3,16 +3,19 @@ import { useContext, useEffect, useState } from "react";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { invoke } from "@tauri-apps/api";
 import { listen } from "@tauri-apps/api/event";
+import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../components/Context";
 import { Method, State } from "../../utils/constants";
 import Button from "../../components/Button";
 
-export default function Download() {
+function DownloadPage() {
   const { directory, method, activeManifest, setState } =
     useContext(AppContext);
 
   // eslint-disable-next-line no-unused-vars
   const [status, setStatus] = useState<string>();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (method === Method.SPLASH) {
@@ -38,6 +41,7 @@ export default function Download() {
           className="flex items-center space-x-2 text-gray-200 cursor-pointer mb-6"
           onClick={() => {
             setState?.(State.CHOOSING_SEASON);
+            navigate("/");
           }}
         >
           <FontAwesomeIcon icon={faArrowLeft} />
@@ -105,3 +109,5 @@ export default function Download() {
     </div>
   );
 }
+
+export default DownloadPage;

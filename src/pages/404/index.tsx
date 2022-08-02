@@ -1,11 +1,14 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext } from "react";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router";
 import { AppContext } from "../../components/Context";
 import { State } from "../../utils/constants";
 
 function NotFound() {
   const { setState } = useContext(AppContext);
+
+  const navigate = useNavigate();
 
   return (
     <div className="p-10">
@@ -13,6 +16,7 @@ function NotFound() {
         className="flex items-center space-x-2 text-gray-200 cursor-pointer mb-6"
         onClick={() => {
           setState?.(State.CHOOSING_SEASON);
+          navigate("/");
         }}
       >
         <FontAwesomeIcon icon={faArrowLeft} />

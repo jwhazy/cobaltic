@@ -2,14 +2,17 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { shell } from "@tauri-apps/api";
+import { useNavigate } from "react-router-dom";
 import { State } from "../../utils/constants";
 import { AppContext } from "../../components/Context";
 import Spinner from "../../components/Spinner";
 import Manifest from "../../components/Manifest";
 
-export default function ChooseManifest() {
+function ManifestPage() {
   const { setState, manifests, setActiveManifest } =
     React.useContext(AppContext);
+
+  const navigate = useNavigate();
 
   return (
     <div className="flex flex-col justify-between">
@@ -17,6 +20,7 @@ export default function ChooseManifest() {
         className="flex items-center space-x-2 text-gray-200 cursor-pointer"
         onClick={() => {
           setState?.(State.CHOOSING_SEASON);
+          navigate("/season");
         }}
       >
         <FontAwesomeIcon icon={faArrowLeft} />
@@ -50,6 +54,7 @@ export default function ChooseManifest() {
                 onClick={() => {
                   setActiveManifest?.(data);
                   setState?.(State.FINALIZING);
+                  navigate("/finalize");
                 }}
               />
             );
@@ -66,3 +71,5 @@ export default function ChooseManifest() {
     </div>
   );
 }
+
+export default ManifestPage;
