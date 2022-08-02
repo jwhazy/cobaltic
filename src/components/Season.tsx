@@ -1,4 +1,4 @@
-import fortnite from "../assets/images/c2s6b.png";
+import fortnite from "../public/c2s6b.png";
 
 export type Props = {
   season: string;
@@ -16,7 +16,7 @@ function SeasonItem({ season, chapter, onClick, banner }: Props) {
       onClick={onClick}
     >
       <img
-        src={`/src/assets/images/${banner}` || fortnite}
+        src={`/src/public/${banner}` || fortnite}
         width={512}
         className="rounded-t-3xl"
         alt=""

@@ -1,10 +1,10 @@
-type Manifest = {
-  name?: string;
-  version?: string;
-  icon?: string;
+export type Manifest = {
   banner?: string;
+  icon?: string;
   id: string;
-  url?: string;
+  name?: string;
+  url: string;
+  version?: string;
 };
 
 export default Manifest;

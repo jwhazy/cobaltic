@@ -8,7 +8,7 @@
   },
   "package": {
     "productName": "Cobaltic",
-    "version": "2.0.0-dev"
+    "version": "2.0.0"
   },
   "tauri": {
     "allowlist": {
@@ -61,7 +61,7 @@
         "minHeight": 500,
         "resizable": true,
         "title": "Cobaltic",
-        "width": 1350,
+        "width": 1360,
         "minWidth": 875,
         "decorations": false
       }

@@ -1,11 +1,11 @@
 import Manifest from "./Manifest";
 
-type Season = {
-  shortName?: string;
-  seasonName?: string;
-  icon?: string;
-  banner?: string;
+export type Season = {
+  banner: string;
+  icon: string;
   manifests: Manifest[];
+  seasonName: string;
+  shortName: string;
 };
 
 export default Season;

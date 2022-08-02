@@ -1,18 +1,19 @@
 import { invoke } from "@tauri-apps/api";
 import { useContext, useEffect } from "react";
 import { AppContext } from "../../components/Context";
+import Season from "../../types/Season";
 import { State } from "../../utils/constants";
-import ChooseManifest from "./ChooseManifest";
-import ChooseSeason from "./ChooseSeason";
-import Download from "./Download";
-import Finalize from "./Finalize";
+import ChooseManifest from "../manifest";
+import ChooseSeason from "../season";
+import Download from "../download";
+import Finalize from "../finalize";
 
 function Home() {
   const { state, setSeasons } = useContext(AppContext);
 
   useEffect(() => {
     invoke("get_manifests").then((m) => {
-      setSeasons?.(JSON.parse(m as string));
+      setSeasons?.(JSON.parse(m as string) as Record<string, Season>);
     });
   }, [setSeasons]);
 

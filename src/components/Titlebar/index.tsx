@@ -2,6 +2,7 @@ import { appWindow } from "@tauri-apps/api/window";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowMinimize, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import { invoke } from "@tauri-apps/api";
 import TitlebarItem from "./Item";
 
 function Titlebar() {
@@ -19,6 +20,9 @@ function Titlebar() {
       <div className=" flex flex-row no-drag">
         <TitlebarItem onClick={() => navigate("/")}>
           <p className="font-black text-lg px-2 ">COBALTIC</p>
+        </TitlebarItem>
+        <TitlebarItem onClick={() => invoke("download")}>
+          <p className=" text-lg px-2 ">Download Splash</p>
         </TitlebarItem>
       </div>
       <div className="ml-auto no-drag flex flex-row bg-header">
