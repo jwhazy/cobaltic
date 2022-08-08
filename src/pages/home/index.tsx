@@ -1,7 +1,7 @@
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext } from "react";
-import { shell } from "@tauri-apps/api";
+import { invoke, shell } from "@tauri-apps/api";
 import { useNavigate } from "react-router-dom";
 import { State } from "../../utils/constants";
 import { AppContext } from "../../components/Context";
@@ -24,7 +24,7 @@ function Home() {
 
   return (
     <div className="flex flex-col justify-between space-y-4">
-      <div className="flex flex-col justify-between">
+      <div className="flex flex-col justify-between mt-8">
         <h1 className="font-bold text-3xl text-center">Use a manifest</h1>
         <p className="text-center mb-3 text-gray-200">
           Already know the version you want? Enter it below.
@@ -61,7 +61,14 @@ function Home() {
           </Button>
         </div>
       </div>
-      <p className="text-center text-gray-300">or</p>
+      <p
+        className="text-center text-gray-300"
+        onClick={() => {
+          invoke("devtools");
+        }}
+      >
+        or
+      </p>
       <div>
         <h1 className="font-bold text-3xl text-center">Choose a season</h1>
         <p className="text-center mb-3 text-gray-200">
@@ -102,15 +109,17 @@ function Home() {
           ) : (
             <Spinner />
           )}
-          <SeasonItem
-            key={null}
-            icon="fortniteb.png"
-            season="Other Builds"
-            banner="fortniteb.png"
-            onClick={() => {
-              shell.open("https://github.com/notsamicc/Fortnite-Builds");
-            }}
-          />
+          {seasons ? (
+            <SeasonItem
+              key={null}
+              icon="fortniteb.png"
+              season="Other Builds"
+              banner="fortniteb.png"
+              onClick={() => {
+                shell.open("https://github.com/notsamicc/Fortnite-Builds");
+              }}
+            />
+          ) : null}
         </div>
       </div>
     </div>

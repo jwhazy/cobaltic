@@ -52,7 +52,7 @@ function FinalizePage() {
   return (
     <>
       <ModalProvider />
-      <div className="flex flex-col justify-between">
+      <div className="flex flex-col justify-between mt-8">
         <div
           className="flex items-center space-x-2 text-gray-200 cursor-pointer"
           onClick={() => {
@@ -84,8 +84,36 @@ function FinalizePage() {
             <FontAwesomeIcon icon={faEllipsis} />
           </Button>
         </div>
+        {/* <div className="mt-6 relative rounded-md shadow-sm text-center">
+          <h3>Extra options</h3>
+        </div>
+         <div className="mt-1 relative rounded-md shadow-sm flex space-x-2">
+          <Input
+            onChange={(e) => {
+              setWorkers?.(e.target.value);
+            }}
+            value={workers}
+            placeholder="Maximum workers (default: 10)"
+          />
+          <Input
+            onChange={(e) => {
+              setWorkers?.(e.target.value);
+            }}
+            value={workers}
+            placeholder="Platform (default: Windows)"
+          />
+        </div> */}
         <div className="mt-8 mb-2 relative rounded-md shadow-sm flex justify-center items-center flex-row">
           <Button
+            type="long"
+            onClick={() => {
+              start(Method.SPLASH);
+            }}
+            className="m-0 py-2 px-12 border bg-opacity-10 flex-1 hover:bg-opacity-25 bg-black text-white transition border-gray-700 placeholder-gray-400 hover:outline-none hover:ring-1 hover:ring-gray-300 hover:ring-opacity-50 shadow-sm disabled:text-gray-500 mt-1 block rounded-l-md rounded-md"
+          >
+            Start
+          </Button>
+          {/* <Button
             type="long"
             onClick={() => {
               start(Method.SPLASH);
@@ -110,7 +138,7 @@ function FinalizePage() {
             className="ml-2 py-2 px-12 border bg-opacity-10 hover:bg-opacity-25 bg-black text-white transition border-gray-700 placeholder-gray-400 hover:outline-none hover:ring-1 hover:ring-gray-300 hover:ring-opacity-50 shadow-sm disabled:text-gray-500 mt-1 block rounded-l-md rounded-md"
           >
             Log to console (debug only)
-          </Button>
+          </Button> */}
         </div>
       </div>
     </>

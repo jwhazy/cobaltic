@@ -8,6 +8,13 @@
   src: url("/inter.woff2") format("woff");
 }
 
+html {
+  overflow-x: hidden;
+  scrollbar-color: #6969dd #e0e0e0;
+  scrollbar-width: thin;
+  @apply bg-zinc-900;
+}
+
 body {
   font-family: Inter;
   @apply text-white;
@@ -68,7 +75,6 @@ img {
 }
 
 /* 
-
     Spinner by tobiasaslin
     https://github.com/tobiasahlin/SpinKit
 

@@ -1,15 +1,15 @@
 #![cfg_attr(
-  all(not(debug_assertions), target_os = "windows"),
-  windows_subsystem = "windows"
+    all(not(debug_assertions), target_os = "windows"),
+    windows_subsystem = "windows"
 )]
 
-use std::{path::{Path}, fs,};
+use chrono::Utc;
 use error_chain::error_chain;
-use chrono::{Utc};
+use std::{fs, path::Path};
+use tauri::Manager;
 
 mod splash;
 mod utils;
-
 
 error_chain! {
      foreign_links {
@@ -20,28 +20,50 @@ error_chain! {
 
 #[derive(Clone, serde::Serialize)]
 struct Payload {
-  message: String,
+    message: String,
 }
 
 fn main() {
+    println!("Cobaltic v2.0.0 starting at {}", Utc::now());
 
-  println!("Cobaltic v2.0.0 starting at {}", Utc::now());
+    if !Path::exists(&utils::app_data_directory()) {
+        fs::create_dir(&utils::app_data_directory().as_path()).expect("Create directory failed.");
+    }
 
-  if !Path::exists(&utils::app_data_directory()) {
-    fs::create_dir(&utils::app_data_directory().as_path()).expect("Create directory failed.");
-  }
-  
-  
-  tauri::Builder::default()
-    .invoke_handler(tauri::generate_handler![get_manifests, splash::check, utils::restart_app, splash::start, splash::download, utils::check_directory_exists])
-    .run(tauri::generate_context!())
-    .expect("error while running tauri application");
+    tauri::Builder::default()
+        .setup(|app| {
+            app.listen_global("splash", |event| {
+                println!("got event-name with payload {:?}", event.payload());
+            });
+
+            app.listen_global("console", |event| {
+                println!("{:?}", event.payload());
+            });
+            Ok(())
+        })
+        .invoke_handler(tauri::generate_handler![
+            get_manifests,
+            splash::check,
+            splash::kill,
+            splash::get,
+            splash::start,
+            splash::download,
+            utils::restart_app,
+            utils::devtools,
+            utils::check_directory_exists,
+            utils::get_version
+        ])
+        .run(tauri::generate_context!())
+        .expect("error while running tauri application");
 }
 
 #[tauri::command]
 async fn get_manifests() -> String {
     reqwest::get("https://cobaltic.jacksta.workers.dev/api/clients")
-    .await.expect("Error while fetching manifests.")
-    .text()
-    .await.expect("Error while parsing manifests.").into()
+        .await
+        .expect("Error while fetching manifests.")
+        .text()
+        .await
+        .expect("Error while parsing manifests.")
+        .into()
 }

@@ -26,6 +26,7 @@ downloader = "0.2.6"
 tokio = "1.19.2"
 duct = "0.13.5"
 chrono = "0.4"
+winapi = { version = "0.3", features = ["winuser"] }
 
 [features]
 # by default Tauri runs in production mode

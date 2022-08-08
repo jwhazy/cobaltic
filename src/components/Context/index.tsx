@@ -2,12 +2,15 @@
 import { createContext, ReactNode, useMemo, useState, useEffect } from "react";
 import { invoke } from "@tauri-apps/api";
 import { useNavigate } from "react-router-dom";
+import { listen } from "@tauri-apps/api/event";
 import Modal from "../../types/Modal";
 import Manifest from "../../types/Manifest";
 import { State, Method } from "../../utils/constants";
 import Season from "../../types/Season";
 
 interface DefaultContext {
+  workers: string;
+  setWorkers: (workers: string) => void;
   activeManifest?: Manifest;
   setActiveManifest?: (manifest: Manifest) => void;
   seasons?: Record<string, Season>;
@@ -33,6 +36,8 @@ type Props = {
 function AppProvider({ children }: Props) {
   const [directory, setDirectory] = useState("");
 
+  const [workers, setWorkers] = useState("");
+
   const [manifests, setManifests] = useState<Manifest[]>([]);
 
   const [seasons, setSeasons] = useState<Record<string, Season>>();
@@ -43,10 +48,13 @@ function AppProvider({ children }: Props) {
 
   const [method, setMethod] = useState<Method>();
 
+  // This will be removed. This will use React Portal eventually.
   const [modal, setModal] = useState<Modal>();
 
   const value = useMemo(
     () => ({
+      workers,
+      setWorkers,
       activeManifest,
       setActiveManifest,
       manifests,
@@ -62,13 +70,30 @@ function AppProvider({ children }: Props) {
       modal,
       setModal,
     }),
-    [activeManifest, directory, manifests, method, modal, seasons, state]
+    [
+      activeManifest,
+      directory,
+      manifests,
+      method,
+      modal,
+      seasons,
+      state,
+      workers,
+    ]
   );
 
   useEffect(() => {
     invoke("get_manifests").then((m) => {
       setSeasons?.(JSON.parse(m as string) as Record<string, Season>);
     });
+
+    const logger = async () => {
+      await listen<string>("console", (event) => {
+        console.log(event.payload);
+      });
+    };
+
+    logger();
   }, [setSeasons]);
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
