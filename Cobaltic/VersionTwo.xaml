@@ -1,0 +1,19 @@
+﻿<adonisControls:AdonisWindow x:Class="Cobaltic.VersionTwo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Cobaltic"
+        mc:Ignorable="d"
+        xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI"
+        xmlns:adonisControls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
+        xmlns:adonisExtensions="clr-namespace:AdonisUI.Extensions;assembly=AdonisUI"
+        Title="Cobaltic"
+        ResizeMode="NoResize" Height="270" Width="510">
+    <Grid>
+        <Label x:Name="TitleLabel" Content="Cobaltic v2" HorizontalAlignment="Right" Width="227" FontFamily="/Cobaltic;component/Assets/#Inter" FontSize="39" Margin="0,11,247,178"/>
+        <Button x:Name="InstallButton" Content="Download" HorizontalAlignment="Center" Height="34" VerticalAlignment="Top" Width="161" FontFamily="/Cobaltic;component/Assets/#Inter" Margin="0,182,0,0" MouseDown="InstallButton_MouseDown" />
+        <TextBlock HorizontalAlignment="Center" Margin="0,61,0,121" TextWrapping="Wrap" Width="437" FontFamily="Inter" Text="Cobaltic v2 is released. The new version contains easier season/client selecting, multiple download methods and a updated UI. Built with Rust and TypeScript."/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,133,0,59" TextWrapping="Wrap" Width="437" FontFamily="Inter" Text="Your current version of Cobaltic is deprecated and cannot be used. Download the latest below." TextAlignment="Center"/>
+    </Grid>
+</adonisControls:AdonisWindow>
