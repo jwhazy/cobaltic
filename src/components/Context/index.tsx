@@ -1,8 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { createContext, ReactNode, useMemo, useState, useEffect } from "react";
 import { invoke } from "@tauri-apps/api";
-import { useNavigate } from "react-router-dom";
-import { listen } from "@tauri-apps/api/event";
 import Modal from "../../types/Modal";
 import Manifest from "../../types/Manifest";
 import { State, Method } from "../../utils/constants";
@@ -86,14 +84,6 @@ function AppProvider({ children }: Props) {
     invoke("get_manifests").then((m) => {
       setSeasons?.(JSON.parse(m as string) as Record<string, Season>);
     });
-
-    const logger = async () => {
-      await listen<string>("console", (event) => {
-        console.log(event.payload);
-      });
-    };
-
-    logger();
   }, [setSeasons]);
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

@@ -36,5 +36,5 @@ pub fn send(window: Window, message: &str) {
 
 #[tauri::command]
 pub fn devtools(window: Window) {
-    window.open_devtools();
+    println!("Opening devtools");
 }

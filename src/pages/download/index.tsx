@@ -9,7 +9,7 @@ import { Method, State } from "../../utils/constants";
 import Button from "../../components/Button";
 
 function DownloadPage() {
-  const { directory, method, activeManifest, setState } =
+  const { directory, method, activeManifest, setState, state } =
     useContext(AppContext);
 
   // eslint-disable-next-line no-unused-vars
@@ -31,10 +31,12 @@ function DownloadPage() {
           await invoke("start", { args });
           console.log("Starting splash");
 
-          listen<string>("splash", (event) => {
+          await listen<string>("splash", (event) => {
             console.log(`Splash "error": payload: ${event.payload}`);
 
-            setStatus(event.payload);
+            if (event.payload === "dead") {
+              setState?.(State.DOWNLOAD_CANCELLED);
+            } else setStatus(event.payload);
           });
         } catch (e: any) {
           setStatus(e.message);
@@ -43,7 +45,7 @@ function DownloadPage() {
 
       startSplash();
     }
-  }, [activeManifest?.id, directory, method]);
+  }, [activeManifest?.id, directory, method, setState]);
 
   switch (method) {
     case Method.SPLASH:
@@ -52,6 +54,7 @@ function DownloadPage() {
           <div
             className="flex items-center space-x-2 text-gray-200 cursor-pointer mb-6 mt-8"
             onClick={() => {
+              invoke("kill");
               setState?.(State.CHOOSING_SEASON);
               navigate("/");
             }}
@@ -79,12 +82,18 @@ function DownloadPage() {
             </div>
             <div>
               <h3>Splash status</h3>
-              <p>{status || "Splash is starting please wait."}</p>
+              <p>
+                {state === State.DOWNLOAD_CANCELLED
+                  ? " The Splash download has been stopped. Go back to the main menu to download again. "
+                  : status || "Splash is starting please wait."}
+              </p>
             </div>
             <div>
-              <Button onClick={() => invoke("kill")} className="mt-4">
-                Cancel
-              </Button>
+              {state === State.DOWNLOADING && (
+                <Button onClick={() => invoke("kill")} className="mt-4">
+                  Cancel
+                </Button>
+              )}
             </div>
           </div>
         </div>

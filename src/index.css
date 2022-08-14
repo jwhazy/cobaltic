@@ -10,9 +10,20 @@
 
 html {
   overflow-x: hidden;
-  scrollbar-color: #6969dd #e0e0e0;
-  scrollbar-width: thin;
   @apply bg-zinc-900;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-[#121214];
+  @apply rounded-b-xl;
+  @apply rounded-t-xl;
 }
 
 body {

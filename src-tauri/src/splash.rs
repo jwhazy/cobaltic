@@ -1,4 +1,5 @@
 use downloader::Downloader;
+use log;
 use platform_dirs::AppDirs;
 use std::path::{Path, PathBuf};
 use tauri::{
@@ -6,6 +7,8 @@ use tauri::{
     api::process::{Command, CommandEvent},
     Window,
 };
+
+use log::{error, info, warn};
 
 use crate::utils;
 
@@ -31,10 +34,9 @@ pub async fn kill(window: Window) {
         .spawn()
         .expect("Error while killing splash.exe");
 
-    window.emit(
-        "splash",
-        "The Splash download has been stopped. Go back to the main menu to download again.",
-    );
+    warn!("Splash was manually killed.");
+
+    window.emit("splash", "dead");
 }
 
 #[tauri::command]
@@ -60,14 +62,18 @@ pub async fn start(window: Window, args: [String; 4]) {
     tauri::async_runtime::spawn(async move {
         while let Some(event) = rx.recv().await {
             if let CommandEvent::Stdout(line) = event {
+                info!("{}", line);
+
                 window
                     .emit("splash", Some(format!("{}", line)))
                     .expect("splash message failed to send.");
             } else if let CommandEvent::Stderr(line) = event {
+                info!("{:?}", line);
                 window
                     .emit("splash", Some(format!("{}", line)))
                     .expect("splash message failed to send.");
             } else if let CommandEvent::Error(line) = event {
+                error!("Splash error: {}", line);
                 window
                     .emit("splash", Some(format!("{}", line)))
                     .expect("splash message failed to send.");

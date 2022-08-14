@@ -17,3 +17,11 @@ export enum Method {
   NATIVE = "Native",
   LOG = "Log (debug only)",
 }
+
+export enum LogLevel {
+  INFO = "info",
+  WARN = "warn",
+  ERROR = "error",
+  DEBUG = "debug",
+  TRACE = "trace",
+}

@@ -1,3 +1,5 @@
+import log from "../utils/logger";
+
 export type Props = {
   title: string;
   subtitle: string;
@@ -10,7 +12,10 @@ function ManifestItem({ title, subtitle, onClick, icon }: Props) {
   return (
     <div
       className="ml-2 m-5 w-[540px] cursor-pointer border bg-opacity-10 hover:bg-opacity-25 bg-black text-white transition border-gray-700 placeholder-gray-400 hover:outline-none hover:ring-1 hover:ring-gray-300 hover:ring-opacity-50 shadow-sm disabled:text-gray-500 mt-1 flex items-center rounded-3xl"
-      onClick={onClick}
+      onClick={() => {
+        log("info", `Manifest identifer: ${subtitle}`);
+        onClick?.();
+      }}
     >
       <img
         src={`/${icon || "c1s1p.jpg"}`}

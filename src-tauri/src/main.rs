@@ -7,6 +7,7 @@ use chrono::Utc;
 use error_chain::error_chain;
 use std::{fs, path::Path};
 use tauri::Manager;
+use tauri_plugin_log::{fern::colors::ColoredLevelConfig, LogTarget, LoggerBuilder};
 
 mod splash;
 mod utils;
@@ -24,14 +25,22 @@ struct Payload {
 }
 
 fn main() {
-    println!("Cobaltic v2.0.0 starting at {}", Utc::now());
+    let targets = [LogTarget::LogDir, LogTarget::Stdout, LogTarget::Webview];
+    let colors = ColoredLevelConfig::default();
 
     if !Path::exists(&utils::app_data_directory()) {
         fs::create_dir(&utils::app_data_directory().as_path()).expect("Create directory failed.");
     }
 
     tauri::Builder::default()
+        .plugin(
+            LoggerBuilder::new()
+                .with_colors(colors)
+                .targets(targets)
+                .build(),
+        )
         .setup(|app| {
+            println!("Cobaltic v2.0.0 starting at {}", Utc::now());
             app.listen_global("splash", |event| {
                 println!("got event-name with payload {:?}", event.payload());
             });
