@@ -27,8 +27,7 @@ pub async fn get() -> String {
 }
 
 #[tauri::command]
-pub async fn kill(window: Window) {
-    // kill process with name "splash.exe"
+pub async fn silent_kill(window: Window) {
     Command::new("taskkill")
         .args(&["/F", "/IM", "splash.exe"])
         .spawn()
@@ -40,6 +39,20 @@ pub async fn kill(window: Window) {
 }
 
 #[tauri::command]
+pub async fn kill(window: Window) {
+    Command::new("taskkill")
+        .args(&["/F", "/IM", "splash.exe"])
+        .spawn()
+        .expect("Error while killing splash.exe");
+
+    warn!("Splash was manually killed.");
+
+    window
+        .emit("splash", "dead")
+        .expect("Emitting failed - killing splash");
+}
+
+#[tauri::command]
 pub async fn start(window: Window, args: [String; 4]) {
     // This is HORRIBLE code - please if you have suggestions make a PR or DM me.
 
@@ -47,7 +60,10 @@ pub async fn start(window: Window, args: [String; 4]) {
         PathBuf::from(&utils::app_data_directory()).join(Path::new("splash.exe"));
 
     if check().await {
-        window.emit("splash", "Splash not found. Downloading now.");
+        window
+            .emit("splash", "Splash not found. Downloading now.")
+            .expect("Splash not found. Emitting failed - downloading splash");
+        info!("Splash not found, downloading now.");
 
         std::thread::spawn(|| download())
             .join()

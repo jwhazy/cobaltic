@@ -7,6 +7,7 @@ import { listen } from "@tauri-apps/api/event";
 import { AppContext } from "../../components/Context";
 import { Method, State } from "../../utils/constants";
 import Button from "../../components/Button";
+import log from "../../utils/logger";
 
 function DownloadPage() {
   const { directory, method, activeManifest, setState, state } =
@@ -29,10 +30,8 @@ function DownloadPage() {
       const startSplash = async () => {
         try {
           await invoke("start", { args });
-          console.log("Starting splash");
-
           await listen<string>("splash", (event) => {
-            console.log(`Splash "error": payload: ${event.payload}`);
+            log("error", event.payload);
 
             if (event.payload === "dead") {
               setState?.(State.DOWNLOAD_CANCELLED);
@@ -40,6 +39,8 @@ function DownloadPage() {
           });
         } catch (e: any) {
           setStatus(e.message);
+          setState?.(State.DOWNLOAD_FAILED);
+          log("error", e.message);
         }
       };
 

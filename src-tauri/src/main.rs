@@ -4,25 +4,12 @@
 )]
 
 use chrono::Utc;
-use error_chain::error_chain;
+use log::info;
 use std::{fs, path::Path};
-use tauri::Manager;
 use tauri_plugin_log::{fern::colors::ColoredLevelConfig, LogTarget, LoggerBuilder};
 
 mod splash;
 mod utils;
-
-error_chain! {
-     foreign_links {
-         Io(std::io::Error);
-         HttpRequest(reqwest::Error);
-     }
-}
-
-#[derive(Clone, serde::Serialize)]
-struct Payload {
-    message: String,
-}
 
 fn main() {
     let targets = [LogTarget::LogDir, LogTarget::Stdout, LogTarget::Webview];
@@ -39,15 +26,8 @@ fn main() {
                 .targets(targets)
                 .build(),
         )
-        .setup(|app| {
-            println!("Cobaltic v2.0.0 starting at {}", Utc::now());
-            app.listen_global("splash", |event| {
-                println!("got event-name with payload {:?}", event.payload());
-            });
-
-            app.listen_global("console", |event| {
-                println!("{:?}", event.payload());
-            });
+        .setup(|_app| {
+            info!("Cobaltic v2.0.0 starting at {:?}", Utc::now());
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
@@ -57,8 +37,8 @@ fn main() {
             splash::get,
             splash::start,
             splash::download,
+            splash::silent_kill,
             utils::restart_app,
-            utils::devtools,
             utils::check_directory_exists,
             utils::get_version
         ])
