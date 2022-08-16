@@ -1,7 +1,6 @@
-name: Release
+name: Build Cobaltic
 on:
   push:
-    branches: ["master", "dev"]
   workflow_dispatch:
 
 jobs:
