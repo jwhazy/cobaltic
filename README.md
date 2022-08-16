@@ -2,7 +2,7 @@
 
 # Cobaltic
 
-The easiest way to install Fortnite versions from Epic's servers.
+The easiest way to install Fortnite from Epic's servers.
 
 ## Installation
 
