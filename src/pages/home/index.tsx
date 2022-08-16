@@ -1,7 +1,7 @@
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext } from "react";
-import { invoke, shell } from "@tauri-apps/api";
+import { shell } from "@tauri-apps/api";
 import { useNavigate } from "react-router-dom";
 import { State } from "../../utils/constants";
 import { AppContext } from "../../components/Context";
@@ -61,14 +61,7 @@ function Home() {
           </Button>
         </div>
       </div>
-      <p
-        className="text-center text-gray-300"
-        onClick={() => {
-          invoke("devtools");
-        }}
-      >
-        or
-      </p>
+      <p className="text-center text-gray-300">or</p>
       <div>
         <h1 className="font-bold text-3xl text-center">Choose a season</h1>
         <p className="text-center mb-3 text-gray-200">

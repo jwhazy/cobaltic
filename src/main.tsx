@@ -15,6 +15,8 @@ import Home from "./pages/home";
 
 attachConsole();
 window.addEventListener("error", (e) => error(e.message));
+window.addEventListener("unhandledrejection", (e) => error(e.reason));
+window.addEventListener("rejectionhandled", (e) => error(e.reason));
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <AppProvider>

@@ -5,6 +5,7 @@ import Modal from "../../types/Modal";
 import Manifest from "../../types/Manifest";
 import { State, Method } from "../../utils/constants";
 import Season from "../../types/Season";
+import log from "../../utils/logger";
 
 interface DefaultContext {
   workers: string;
@@ -83,6 +84,7 @@ function AppProvider({ children }: Props) {
   useEffect(() => {
     invoke("get_manifests").then((m) => {
       setSeasons?.(JSON.parse(m as string) as Record<string, Season>);
+      log("info", "Manifests fetched and set successfully.");
     });
   }, [setSeasons]);
 

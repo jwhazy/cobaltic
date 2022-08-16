@@ -27,15 +27,11 @@ pub async fn get() -> String {
 }
 
 #[tauri::command]
-pub async fn silent_kill(window: Window) {
+pub async fn silent_kill() {
     Command::new("taskkill")
         .args(&["/F", "/IM", "splash.exe"])
         .spawn()
         .expect("Error while killing splash.exe");
-
-    warn!("Splash was manually killed.");
-
-    window.emit("splash", "dead");
 }
 
 #[tauri::command]
@@ -45,7 +41,7 @@ pub async fn kill(window: Window) {
         .spawn()
         .expect("Error while killing splash.exe");
 
-    warn!("Splash was manually killed.");
+    warn!("Splash was manually cancelled/killed.");
 
     window
         .emit("splash", "dead")
@@ -100,6 +96,7 @@ pub async fn start(window: Window, args: [String; 4]) {
 
 #[tauri::command]
 pub fn download() -> bool {
+    info!("Starting Splash download");
     let app_dirs = AppDirs::new(Some("Cobaltic"), true).unwrap();
 
     // https://github.com/hunger/downloader/blob/main/examples/tui_basic.rs
@@ -118,8 +115,8 @@ pub fn download() -> bool {
 
     for r in result {
         match r {
-            Err(e) => print!("Error occurred! {}", &e.to_string()),
-            Ok(s) => print!("Success: {}", &s),
+            Err(e) => error!("Error occurred while downloading! {}", &e.to_string()),
+            Ok(s) => error!("Download success: {}", &s),
         };
     }
 

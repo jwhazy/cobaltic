@@ -33,9 +33,6 @@ function Titlebar() {
         <TitlebarItem onClick={() => invoke("download")}>
           <p className="text-lg px-2 ">Force Splash download</p>
         </TitlebarItem>
-        <TitlebarItem onClick={() => invoke("devtools")}>
-          <p className="text-lg px-2 ">Open DevTools</p>
-        </TitlebarItem>
       </div>
       <div className="ml-auto no-drag flex flex-row bg-header">
         <TitlebarItem onClick={minimize}>
