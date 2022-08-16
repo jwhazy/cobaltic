@@ -8,12 +8,8 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "tauri": "tauri",
-    "postinstall": "husky install"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "prettier --write . && git add -A ."
-    }
+    "postinstall": "husky install",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@tauri-apps/api": "^1.0.2",
@@ -43,7 +39,7 @@
     "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-jsx-a11y": "^6.6.1",
     "eslint-plugin-prettier": "^4.2.1",
-    "husky": "^8.0.1",
+    "husky": "^8.0.0",
     "postcss": "^8.4.14",
     "prettier": "^2.7.1",
     "tailwind-merge": "^1.5.1",
