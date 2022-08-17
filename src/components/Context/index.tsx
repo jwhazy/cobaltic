@@ -1,11 +1,14 @@
 /* eslint-disable no-unused-vars */
 import { createContext, ReactNode, useMemo, useState, useEffect } from "react";
 import { invoke } from "@tauri-apps/api";
+import { listen } from "@tauri-apps/api/event";
+import { checkUpdate } from "@tauri-apps/api/updater";
 import Modal from "../../types/Modal";
 import Manifest from "../../types/Manifest";
 import { State, Method } from "../../utils/constants";
 import Season from "../../types/Season";
 import log from "../../utils/logger";
+import Update from "../../types/Update";
 
 interface DefaultContext {
   workers: string;
@@ -14,6 +17,8 @@ interface DefaultContext {
   setActiveManifest?: (manifest: Manifest) => void;
   seasons?: Record<string, Season>;
   setSeasons?: (manifests: Record<string, Season>) => void;
+  update?: Update;
+  setUpdate?: (update: Update) => void;
   directory?: string;
   setDirectory?: (directory: string) => void;
   manifests?: Manifest[];
@@ -34,6 +39,8 @@ type Props = {
 
 function AppProvider({ children }: Props) {
   const [directory, setDirectory] = useState("");
+
+  const [update, setUpdate] = useState<Update>();
 
   const [workers, setWorkers] = useState("");
 
@@ -56,6 +63,8 @@ function AppProvider({ children }: Props) {
       setWorkers,
       activeManifest,
       setActiveManifest,
+      update,
+      setUpdate,
       manifests,
       setManifests,
       directory,
@@ -72,6 +81,7 @@ function AppProvider({ children }: Props) {
     [
       activeManifest,
       directory,
+      update,
       manifests,
       method,
       modal,
@@ -85,6 +95,12 @@ function AppProvider({ children }: Props) {
     invoke("get_manifests").then((m) => {
       setSeasons?.(JSON.parse(m as string) as Record<string, Season>);
       log("info", "Manifests fetched and set successfully.");
+    });
+
+    checkUpdate();
+
+    listen("tauri://update-available", (event) => {
+      setUpdate(event.payload as Update);
     });
   }, [setSeasons]);
 

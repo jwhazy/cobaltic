@@ -50,9 +50,7 @@
     "security": {
       "csp": null
     },
-    "updater": {
-      "active": false
-    },
+    "updater": "not yet :)",
     "windows": [
       {
         "fullscreen": false,

@@ -1,6 +1,6 @@
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { shell } from "@tauri-apps/api";
 import { useNavigate } from "react-router-dom";
 import { State } from "../../utils/constants";
@@ -20,6 +20,9 @@ function Home() {
     setModal,
   } = useContext(AppContext);
 
+  useEffect(() => {
+    setState?.(State.CHOOSING_SEASON);
+  });
   const navigate = useNavigate();
 
   return (

@@ -10,6 +10,8 @@ export enum State {
   DOWNLOAD_FAILED = "Download failed",
   DOWNLOAD_CANCELLED = "Download cancelled",
   DOWNLOAD_PAUSED = "Download paused",
+  UPDATE_AVAILABLE = "Update available",
+  UPDATING = "Updating",
 }
 
 export enum Method {

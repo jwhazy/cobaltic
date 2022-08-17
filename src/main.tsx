@@ -12,11 +12,13 @@ import Download from "./pages/download";
 import Finalize from "./pages/finalize";
 import Manifest from "./pages/manifest";
 import Home from "./pages/home";
+import Update from "./pages/update";
 
 attachConsole();
 window.addEventListener("error", (e) => error(e.message));
 window.addEventListener("unhandledrejection", (e) => error(e.reason));
 window.addEventListener("rejectionhandled", (e) => error(e.reason));
+// window.addEventListener("contextmenu", (event) => event.preventDefault());
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <AppProvider>
@@ -29,6 +31,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       >
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/update" element={<Update />} />
           <Route path="/manifest" element={<Manifest />} />
           <Route path="/finalize" element={<Finalize />} />
           <Route path="/download" element={<Download />} />
