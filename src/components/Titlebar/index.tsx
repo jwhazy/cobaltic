@@ -41,7 +41,7 @@ function Titlebar() {
             </TitlebarItem>
           </>
         ) : (
-          <TitlebarItem onClick={() => navigate("/")}>
+          <TitlebarItem>
             <p className="font-black text-lg px-2 ">
               COBALTIC<a className="font-normal text-sm pl-2">Updater</a>
             </p>

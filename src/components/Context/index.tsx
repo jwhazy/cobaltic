@@ -2,13 +2,12 @@
 import { createContext, ReactNode, useMemo, useState, useEffect } from "react";
 import { invoke } from "@tauri-apps/api";
 import { listen } from "@tauri-apps/api/event";
-import { checkUpdate } from "@tauri-apps/api/updater";
+import { checkUpdate, UpdateManifest } from "@tauri-apps/api/updater";
 import Modal from "../../types/Modal";
 import Manifest from "../../types/Manifest";
 import { State, Method } from "../../utils/constants";
 import Season from "../../types/Season";
 import log from "../../utils/logger";
-import Update from "../../types/Update";
 
 interface DefaultContext {
   workers: string;
@@ -17,8 +16,8 @@ interface DefaultContext {
   setActiveManifest?: (manifest: Manifest) => void;
   seasons?: Record<string, Season>;
   setSeasons?: (manifests: Record<string, Season>) => void;
-  update?: Update;
-  setUpdate?: (update: Update) => void;
+  update?: UpdateManifest;
+  setUpdate?: (update: UpdateManifest) => void;
   directory?: string;
   setDirectory?: (directory: string) => void;
   manifests?: Manifest[];
@@ -40,7 +39,7 @@ type Props = {
 function AppProvider({ children }: Props) {
   const [directory, setDirectory] = useState("");
 
-  const [update, setUpdate] = useState<Update>();
+  const [update, setUpdate] = useState<UpdateManifest>();
 
   const [workers, setWorkers] = useState("");
 
@@ -100,7 +99,7 @@ function AppProvider({ children }: Props) {
     checkUpdate();
 
     listen("tauri://update-available", (event) => {
-      setUpdate(event.payload as Update);
+      setUpdate(event.payload as UpdateManifest);
     });
   }, [setSeasons]);
 
