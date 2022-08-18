@@ -13,6 +13,7 @@ import Finalize from "./pages/finalize";
 import Manifest from "./pages/manifest";
 import Home from "./pages/home";
 import Update from "./pages/update";
+import Settings from "./pages/settings";
 
 attachConsole();
 window.addEventListener("error", (e) => error(e.message));
@@ -35,6 +36,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route path="/manifest" element={<Manifest />} />
           <Route path="/finalize" element={<Finalize />} />
           <Route path="/download" element={<Download />} />
+          <Route path="/settings" element={<Settings />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

@@ -1,8 +1,12 @@
 import { appWindow } from "@tauri-apps/api/window";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faWindowMinimize, faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCog,
+  faWindowMinimize,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import { app, invoke } from "@tauri-apps/api";
+import { app } from "@tauri-apps/api";
 import { useState, useEffect, useContext } from "react";
 import TitlebarItem from "./Item";
 import { State } from "../../utils/constants";
@@ -17,6 +21,8 @@ function Titlebar() {
 
   const minimize = () => appWindow.minimize();
 
+  const settings = () => navigate("/settings");
+
   const [version, setVersion] = useState<string>();
 
   useEffect(() => {
@@ -30,19 +36,17 @@ function Titlebar() {
     >
       <div className="flex flex-row no-drag">
         {state !== State.UPDATE_READY ? (
-          <>
-            <TitlebarItem onClick={() => navigate("/")}>
-              <p className="font-black text-lg px-2 ">
-                COBALTIC<a className="font-normal text-sm pl-2">{version}</a>
-              </p>
-            </TitlebarItem>
-            <TitlebarItem onClick={() => invoke("download")}>
-              <p className="text-lg px-2 ">Force Splash download</p>
-            </TitlebarItem>
-          </>
+          <TitlebarItem onClick={() => navigate("/")}>
+            <p className="font-black text-lg px-2 ">
+              COBALTIC<a className="font-normal text-sm pl-2">{version}</a>
+            </p>
+          </TitlebarItem>
         ) : null}
       </div>
       <div className="ml-auto no-drag flex flex-row bg-header">
+        <TitlebarItem onClick={settings}>
+          <FontAwesomeIcon icon={faCog} />
+        </TitlebarItem>
         <TitlebarItem onClick={minimize}>
           <FontAwesomeIcon icon={faWindowMinimize} />
         </TitlebarItem>
