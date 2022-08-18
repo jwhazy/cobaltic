@@ -15,7 +15,7 @@ function Update() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setState?.(State.UPDATING);
+    setState?.(State.UPDATE_READY);
   });
 
   const updateClick = async () => {
@@ -25,6 +25,7 @@ function Update() {
       if (shouldUpdate) {
         // display dialog
         await installUpdate();
+
         // install complete, restart app
         await relaunch();
       }
@@ -37,23 +38,22 @@ function Update() {
   const cancelClick = async () => navigate("/");
 
   return (
-    <div className="flex flex-col w-1/2 ">
-      <div className="flex flex-col mt-48">
-        <h1 className="font-black text-5xl">
-          COBALTIC <a className="text-gray-200">UPDATER</a>
-        </h1>
+    <div className="flex flex-row space-x-8 mt-24 mr-64 pb-12">
+      <img src="/logo512.png" alt="logo" className="w-48 h-48" />
+      <div className="flex flex-col ">
+        <h1>Cobaltic {update?.version}</h1>
         <p className=" text-gray-200">
           Cobaltic {update?.version} is ready to be installed.
         </p>
         <div className="mt-4 mb-4">
-          <h2>Patch notes</h2>
+          <h3>Patch notes</h3>
           <p>
             {update?.body
               ? update?.body
               : "No patch notes available, check the GitHub for more information."}
           </p>
         </div>
-        {state === State.UPDATING ? (
+        {state === State.UPDATE_READY ? (
           <div className="flex mt-8">
             <Button type="long" className="ml-0 flex-1" onClick={updateClick}>
               Install

@@ -80,6 +80,7 @@ pub async fn start(window: Window, args: [String; 4]) {
                     .emit("splash", Some(format!("{}", line)))
                     .expect("splash message failed to send.");
             } else if let CommandEvent::Stderr(line) = event {
+                // For some stupid reason splash outputs to Stderr and not Stdout?
                 info!("{:?}", line);
                 window
                     .emit("splash", Some(format!("{}", line)))

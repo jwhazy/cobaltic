@@ -1,7 +1,7 @@
 {
   "$schema": "..\\node_modules/@tauri-apps/cli\\schema.json",
   "build": {
-    "beforeBuildCommand": "yarn build",
+    "beforeBuildCommand": "yarn vite:build",
     "beforeDevCommand": "yarn vite",
     "devPath": "http://localhost:5173",
     "distDir": "../dist"
@@ -50,7 +50,7 @@
     "security": {
       "csp": null
     },
-    "updater": "not yet :)",
+
     "windows": [
       {
         "fullscreen": false,

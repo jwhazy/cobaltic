@@ -19,8 +19,6 @@ function FinalizePage() {
     dialog.open({ directory: true }).then((value) => {
       if (typeof value === "string") {
         setDirectory?.(value as string);
-      } else {
-        setDirectory?.("Something goofed.");
       }
     });
   };

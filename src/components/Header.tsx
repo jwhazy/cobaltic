@@ -17,7 +17,17 @@ function Header() {
     app.getVersion().then((v) => setVersion(`${v}-dev`));
   }, []);
 
-  if (state === State.UPDATING) return null;
+  if (state === State.UPDATE_READY || state === State.UPDATING)
+    return (
+      <div className="flex flex-col bg-black h-48 justify-center bg-opacity-25 py-8 animate__animated animate__fadeIn text-center backdrop-filter backdrop-blur-3xl w-screen ">
+        <div className=" animate__animated animate__fadeInDown mb-8">
+          <h1 className="font-black text-6xl text-gray-200">
+            <a className="text-white">COBALTIC UPDATER</a>
+          </h1>
+        </div>
+      </div>
+    );
+
   return (
     <div className="flex flex-col bg-black h-48 justify-center bg-opacity-25 py-8 animate__animated animate__fadeIn text-center backdrop-filter backdrop-blur-3xl w-screen ">
       <div className=" animate__animated animate__fadeInDown">
@@ -32,6 +42,7 @@ function Header() {
           "Choose a season"
         )}
 
+        {/* eslint-disable-next-line no-nested-ternary */}
         {update ? (
           <p className="text-center text-gray-200">
             Cobaltic {update.version} is ready to be installed.

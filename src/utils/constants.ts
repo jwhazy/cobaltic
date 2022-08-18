@@ -11,6 +11,7 @@ export enum State {
   DOWNLOAD_CANCELLED = "Download cancelled",
   DOWNLOAD_PAUSED = "Download paused",
   UPDATE_AVAILABLE = "Update available",
+  UPDATE_READY = "Update ready",
   UPDATING = "Updating",
 }
 

@@ -29,7 +29,7 @@ function Titlebar() {
       className="pl-2 flex justify-between backdrop-filter backdrop-blur-3xl top-0 z-50 drag h-8 sticky bg-black bg-opacity-25 w-full flex-shrink-0 overflow-hidden"
     >
       <div className="flex flex-row no-drag">
-        {state !== State.UPDATING ? (
+        {state !== State.UPDATE_READY ? (
           <>
             <TitlebarItem onClick={() => navigate("/")}>
               <p className="font-black text-lg px-2 ">
@@ -40,13 +40,7 @@ function Titlebar() {
               <p className="text-lg px-2 ">Force Splash download</p>
             </TitlebarItem>
           </>
-        ) : (
-          <TitlebarItem>
-            <p className="font-black text-lg px-2 ">
-              COBALTIC<a className="font-normal text-sm pl-2">Updater</a>
-            </p>
-          </TitlebarItem>
-        )}
+        ) : null}
       </div>
       <div className="ml-auto no-drag flex flex-row bg-header">
         <TitlebarItem onClick={minimize}>

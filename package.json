@@ -4,9 +4,9 @@
   "version": "2.0.0",
   "scripts": {
     "dev": "tauri dev",
+    "build": "tauri build",
     "vite": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
+    "vite:build": "tsc && vite build",
     "tauri": "tauri",
     "postinstall": "husky install",
     "prepare": "husky install"
