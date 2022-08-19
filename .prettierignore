@@ -1,4 +1,8 @@
 node_modules
+src-tauri
+
 # Ignore artifacts:
 build
+target
+dist
 coverage

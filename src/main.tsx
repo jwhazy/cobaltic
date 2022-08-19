@@ -21,7 +21,7 @@ window.addEventListener("unhandledrejection", (e) => error(e.reason));
 window.addEventListener("rejectionhandled", (e) => error(e.reason));
 // window.addEventListener("contextmenu", (event) => event.preventDefault());
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
+ReactDOM.createRoot(document.getElementById("cobaltic")!).render(
   <AppProvider>
     <BrowserRouter>
       <Titlebar />
