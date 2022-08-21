@@ -31,18 +31,22 @@ function ManifestPage() {
       <p className="text-center mb-3 text-gray-200">
         Version you want not listed?{" "}
         <a
-          className="text-blue-400 hover:text-blue-500 hover:underline cursor-pointer"
+          className="font-bold cursor-pointer"
           onClick={() => {
             shell.open("https://github.com/notsamicc/Fortnite-Builds");
           }}
         >
-          Click here.
+          Click here
         </a>
       </p>
       <div className="my-8 flex flex-row flex-wrap flex-grow-0 align-center justify-center">
         {manifests ? (
           Object.keys(manifests).map((manifest) => {
             const data = manifests[manifest as unknown as number];
+            if (!data) {
+              setState?.(State.CHOOSING_SEASON);
+              navigate("/");
+            }
             return (
               <Manifest
                 key={data.name}

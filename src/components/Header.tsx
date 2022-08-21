@@ -1,17 +1,16 @@
 import { app } from "@tauri-apps/api";
+import { open } from "@tauri-apps/api/shell";
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { State } from "../utils/constants";
 import { AppContext } from "./Context";
 
 function Header() {
-  const { state, update } = useContext(AppContext);
+  const { state, updateAvailable } = useContext(AppContext);
 
   const [version, setVersion] = useState<string>();
 
-  const navigate = useNavigate();
-
-  const updateClick = async () => navigate("/update");
+  const updateClick = async () =>
+    open("https://github.com/jwhazy/cobaltic/releases");
 
   useEffect(() => {
     app.getVersion().then((v) => setVersion(`${v}-dev`));
@@ -20,7 +19,7 @@ function Header() {
   if (state === State.UPDATE_READY || state === State.UPDATING)
     return (
       <div className="flex flex-col bg-black h-48 justify-center bg-opacity-25 py-8 animate__animated animate__fadeIn text-center backdrop-filter backdrop-blur-3xl w-screen ">
-        <div className=" animate__animated animate__fadeInDown mb-8">
+        <div className=" animate__animated animate__fadeInDown mb-6">
           <h1 className="font-black text-6xl text-gray-200">
             <a className="text-white">COBALTIC UPDATER</a>
           </h1>
@@ -43,9 +42,9 @@ function Header() {
         )}
 
         {/* eslint-disable-next-line no-nested-ternary */}
-        {update ? (
+        {updateAvailable ? (
           <p className="text-center text-gray-200">
-            Cobaltic {update.version} is ready to be installed.
+            New Cobaltic update available.
             <a className="font-bold cursor-pointer" onClick={updateClick}>
               {" "}
               Update now

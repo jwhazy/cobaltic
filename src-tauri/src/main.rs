@@ -31,7 +31,6 @@ fn main() {
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
-            get_manifests,
             splash::check,
             splash::kill,
             splash::get,
@@ -39,20 +38,11 @@ fn main() {
             splash::download,
             splash::silent_kill,
             utils::restart_app,
+            utils::get_manifests,
+            utils::check_update,
             utils::check_directory_exists,
             utils::get_version
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
-}
-
-#[tauri::command]
-async fn get_manifests() -> String {
-    reqwest::get("https://cobaltic.jacksta.workers.dev/api/clients")
-        .await
-        .expect("Error while fetching manifests.")
-        .text()
-        .await
-        .expect("Error while parsing manifests.")
-        .into()
 }

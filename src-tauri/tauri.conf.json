@@ -50,7 +50,6 @@
     "security": {
       "csp": null
     },
-
     "windows": [
       {
         "fullscreen": false,

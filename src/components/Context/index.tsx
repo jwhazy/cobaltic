@@ -1,8 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { createContext, ReactNode, useMemo, useState, useEffect } from "react";
 import { invoke } from "@tauri-apps/api";
-import { listen } from "@tauri-apps/api/event";
-import { checkUpdate, UpdateManifest } from "@tauri-apps/api/updater";
+import { UpdateManifest } from "@tauri-apps/api/updater";
 import Modal from "../../types/Modal";
 import Manifest from "../../types/Manifest";
 import { State, Method } from "../../utils/constants";
@@ -16,6 +15,8 @@ interface DefaultContext {
   setActiveManifest?: (manifest: Manifest) => void;
   seasons?: Record<string, Season>;
   setSeasons?: (manifests: Record<string, Season>) => void;
+  updateAvailable?: boolean;
+  setUpdateAvailable?: (available: boolean) => void;
   update?: UpdateManifest;
   setUpdate?: (update: UpdateManifest) => void;
   directory?: string;
@@ -53,6 +54,8 @@ function AppProvider({ children }: Props) {
 
   const [method, setMethod] = useState<Method>();
 
+  const [updateAvailable, setUpdateAvailable] = useState(false);
+
   // This will be removed. This will use React Portal eventually.
   const [modal, setModal] = useState<Modal>();
 
@@ -73,12 +76,14 @@ function AppProvider({ children }: Props) {
       state,
       setState,
       method,
+      updateAvailable,
       setMethod,
       modal,
       setModal,
     }),
     [
       activeManifest,
+      updateAvailable,
       directory,
       update,
       manifests,
@@ -96,11 +101,16 @@ function AppProvider({ children }: Props) {
       log("info", "Manifests fetched and set successfully.");
     });
 
-    checkUpdate();
-
-    listen("tauri://update-available", (event) => {
-      setUpdate(event.payload as UpdateManifest);
+    invoke("check_update").then((u) => {
+      setUpdateAvailable?.(u as boolean);
+      log("info", u as string);
     });
+
+    // checkUpdate();
+
+    // listen("tauri://update-available", (event) => {
+    //   setUpdate(event.payload as UpdateManifest);
+    // });
   }, [setSeasons]);
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

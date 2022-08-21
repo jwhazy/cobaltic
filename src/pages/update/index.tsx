@@ -8,25 +8,30 @@ import { State } from "../../utils/constants";
 import log from "../../utils/logger";
 
 function Update() {
-  const { update, setState, state } = useContext(AppContext);
+  const { update, setState } = useContext(AppContext);
 
   const [status, setStatus] = useState<string>();
 
   const navigate = useNavigate();
+
+  const updateLog = (message: string) => {
+    log("info", message);
+    setStatus(message);
+  };
 
   useEffect(() => {
     setState?.(State.UPDATE_READY);
   });
 
   const updateClick = async () => {
+    setState?.(State.UPDATING);
+    updateLog("Preparing update...");
     try {
-      setState?.(State.UPDATING);
       const { shouldUpdate } = await checkUpdate();
       if (shouldUpdate) {
-        // display dialog
+        updateLog("Downloading update...");
         await installUpdate();
-
-        // install complete, restart app
+        updateLog("Update downloaded, relaunching...");
         await relaunch();
       }
     } catch (error) {
@@ -45,7 +50,7 @@ function Update() {
         <p className=" text-gray-200">
           Cobaltic {update?.version} is ready to be installed.
         </p>
-        <div className="mt-4 mb-4">
+        <div className="mt-2">
           <h3>Patch notes</h3>
           <p>
             {update?.body
@@ -53,21 +58,24 @@ function Update() {
               : "No patch notes available, check the GitHub for more information."}
           </p>
         </div>
-        {state === State.UPDATE_READY ? (
-          <div className="flex mt-8">
-            <Button type="long" className="ml-0 flex-1" onClick={updateClick}>
-              Install
-            </Button>
-            <Button
-              className="bg-red-500 hover:bg-red-800 ml-2"
-              onClick={cancelClick}
-            >
-              Cancel
-            </Button>
+        {status && (
+          <div className="mt-2">
+            <h3>Status</h3>
+            <p>{status}</p>
           </div>
-        ) : (
-          <p>{status}</p>
         )}
+
+        <div className="flex mt-8">
+          <Button type="long" className="ml-0 flex-1" onClick={updateClick}>
+            Install
+          </Button>
+          <Button
+            className="bg-red-500 hover:bg-red-800 ml-2"
+            onClick={cancelClick}
+          >
+            Cancel
+          </Button>
+        </div>
       </div>
     </div>
   );

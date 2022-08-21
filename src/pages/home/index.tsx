@@ -28,7 +28,9 @@ function Home() {
   return (
     <div className="flex flex-col justify-between space-y-4">
       <div className="flex flex-col justify-between mt-8">
-        <h1 className="font-bold text-3xl text-center">Use a manifest</h1>
+        <h1 className="font-bold text-3xl text-center">
+          Use a specific manifest
+        </h1>
         <p className="text-center mb-3 text-gray-200">
           Already know the version you want? Enter it below.
         </p>
