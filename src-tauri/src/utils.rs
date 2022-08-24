@@ -28,14 +28,17 @@ pub async fn check_update() -> bool {
 
     let json: Value = serde_json::from_str(&request).expect("Version failed");
 
-    let latest_version = json["dev"]["version"].to_string();
+    let latest_version = json["dev"]["version"].to_string().replace('"', "");
 
     let self_version: &str = env!("CARGO_PKG_VERSION");
 
-    if self_version == latest_version {
-        false
-    } else {
+    log::info!("Latest version: {}", latest_version);
+    log::info!("Self version: {}", self_version);
+
+    if self_version != latest_version {
         true
+    } else {
+        false
     }
 }
 

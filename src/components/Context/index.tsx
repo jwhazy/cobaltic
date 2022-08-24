@@ -101,10 +101,7 @@ function AppProvider({ children }: Props) {
       log("info", "Manifests fetched and set successfully.");
     });
 
-    invoke("check_update").then((u) => {
-      setUpdateAvailable?.(u as boolean);
-      log("info", u as string);
-    });
+    invoke("check_update").then((u) => setUpdateAvailable?.(u as boolean));
 
     // checkUpdate();
 
