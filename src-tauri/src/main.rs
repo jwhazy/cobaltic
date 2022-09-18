@@ -27,7 +27,7 @@ fn main() {
                 .build(),
         )
         .setup(|_app| {
-            info!("Cobaltic v2.0.0 starting at {:?}", Utc::now());
+            info!("Cobaltic v2.0.1 starting at {:?}", Utc::now());
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
