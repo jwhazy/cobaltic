@@ -1,6 +1,6 @@
 [package]
 name = "cobaltic"
-version = "2.0.1"
+version = "2.0.2"
 description = "An easy to use Fortnite downloader"
 authors = ["jacksta"]
 license = "GPL-3.0"
