@@ -1,36 +1,60 @@
-import log from "../utils/logger";
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+import { useAtom } from "jotai";
+import useStage from "../hooks/useStage";
+import { Season as SeasonType } from "../types/Season";
+import { customManifest, selectedSeason } from "../utils/state";
 
-export type Props = {
-  season: string;
-  chapter?: string;
-  icon: string;
-  banner: string;
+const Season = ({
+  banner,
+  icon,
+  manifests,
+  seasonName,
+  shortName,
+  onClick,
+}: SeasonType & { onClick?: () => void }) => {
+  const [, setSeason] = useAtom(selectedSeason);
+  const [, setCustomManifest] = useAtom(customManifest);
 
-  onClick?: () => void;
-};
+  const { setStage } = useStage();
 
-function SeasonItem({ season, chapter, onClick, banner }: Props) {
+  const onClickSeason = (): void => {
+    if (onClick) return onClick();
+    setCustomManifest(false);
+    setSeason({ banner, icon, manifests, seasonName, shortName });
+    setStage("options");
+  };
+
+  const c = shortName?.includes("c3")
+    ? "Chapter 3"
+    : shortName?.includes("c2")
+    ? "Chapter 2"
+    : shortName?.includes("c1")
+    ? "Chapter 1"
+    : "";
+
+  const s = seasonName?.includes("Chapter")
+    ? seasonName.replace(/C.*,/, "")
+    : seasonName;
+
   return (
-    <div
-      className="ml-2 flex-col m-3 w-max cursor-pointer border bg-opacity-10 hover:bg-opacity-25 bg-black text-white transition border-gray-700 placeholder-gray-400 hover:outline-none hover:ring-1 hover:ring-gray-300 hover:ring-opacity-50 shadow-sm disabled:text-gray-500 mt-1 flex items-center rounded-3xl"
-      onClick={() => {
-        log("info", `${chapter} ${season} selected.`);
-        onClick?.();
-      }}
+    <button
+      className="relative flex w-max cursor-pointer overflow-clip rounded-xl drop-shadow-md"
+      onClick={onClickSeason}
+      type="button"
     >
+      <div className=" overflow-none absolute flex h-full w-full select-none flex-col items-center justify-center text-center opacity-0 drop-shadow-md transition-all hover:bg-black/40 hover:opacity-100 md:p-6 md:py-3">
+        <p className="tracking-widest  text-white ">{c?.toUpperCase()}</p>
+        <h2 className=" text-white">{s}</h2>
+      </div>
       <img
         src={`/${banner || "c1s1b.png"}`}
-        width={512}
-        className="rounded-t-3xl"
+        width={420}
+        className=" rounded-2xl"
         alt=""
       />
-      <div className="pt-4 drop-shadow-md md:p-6 md:py-3 text-center">
-        <p className="text-gray-200 tracking-widest">
-          {chapter?.toUpperCase()}
-        </p>
-        <h2>{season}</h2>
-      </div>
-    </div>
+    </button>
   );
-}
-export default SeasonItem;
+};
+
+export default Season;

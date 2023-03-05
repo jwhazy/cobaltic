@@ -1,24 +1,34 @@
-use platform_dirs::AppDirs;
-use std::path::Path;
-use std::path::PathBuf;
-
 use serde_json::Value;
+use std::path::PathBuf;
+use tauri::{self};
+
+use reqwest;
 
 #[tauri::command]
-pub async fn get_manifests() -> String {
-    reqwest::get("https://cobaltic.jacksta.workers.dev/api/clients")
+pub async fn get_manifests() -> Result<String, String> {
+    let request = reqwest::get("https://cobaltic.jacksta.workers.dev/api/clients")
         .await
-        .expect("Error while fetching manifests.")
+        .map_err(|e| e.to_string())?
         .text()
         .await
-        .expect("Error while parsing manifests.")
-        .into()
+        .unwrap();
+
+    Ok(request)
+}
+
+pub fn app_data_directory() -> PathBuf {
+    let mut path = dirs::data_dir().unwrap();
+    path.push("Cobaltic");
+    path
 }
 
 #[tauri::command]
-pub async fn check_update() -> bool {
-    // More horrific Rust code.
+pub fn get_version() -> String {
+    env!("CARGO_PKG_VERSION").to_string()
+}
 
+#[tauri::command]
+pub async fn check_update() -> Result<bool, String> {
     let request = reqwest::get("https://cobaltic.jacksta.workers.dev/api/v2/info")
         .await
         .expect("Error while fetching manifests.")
@@ -35,33 +45,9 @@ pub async fn check_update() -> bool {
     log::info!("Latest version: {}", latest_version);
     log::info!("Self version: {}", self_version);
 
-    if self_version != latest_version {
-        true
+    if latest_version == self_version {
+        Ok(false)
     } else {
-        false
+        Ok(true)
     }
-}
-
-#[tauri::command]
-pub fn check_directory_exists(directory: String) -> bool {
-    Path::new(&directory).exists().into()
-}
-
-#[tauri::command]
-pub fn restart_app() {
-    open::that(std::env::current_exe().expect("App executable not found, somehow."))
-        .expect("App executable found but not launched, somehow.");
-    std::process::exit(0);
-}
-
-pub fn app_data_directory() -> PathBuf {
-    AppDirs::new(Some("Cobaltic"), true)
-        .unwrap()
-        .config_dir
-        .into()
-}
-
-#[tauri::command]
-pub fn get_version() -> String {
-    env!("CARGO_PKG_VERSION").to_string()
 }

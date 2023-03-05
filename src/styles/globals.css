@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    padding: 0;
+    margin: 0;
+  }
+  :root {
+    @apply select-none text-black antialiased dark:text-white;
+  }
+
+  html {
+    @apply scroll-smooth bg-white dark:bg-zinc-900;
+  }
+
+  .h0 {
+    @apply text-3xl font-bold md:text-5xl;
+  }
+
+  h1,
+  .h1 {
+    @apply text-2xl font-bold md:text-4xl;
+  }
+
+  h2,
+  .h2 {
+    @apply text-xl font-bold md:text-3xl;
+  }
+
+  h3,
+  .h3 {
+    @apply text-lg font-bold md:text-2xl;
+  }
+
+  h4,
+  .h4 {
+    @apply text-base font-bold md:text-lg;
+  }
+
+  body,
+  .p {
+    @apply text-sm md:text-base;
+  }
+
+  /* https://tobiasahlin.com/spinkit */
+  .spinner {
+    width: 40px;
+    height: 40px;
+    background-color: grey;
+    -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
+    animation: sk-rotateplane 1.2s infinite ease-in-out;
+  }
+
+  @-webkit-keyframes sk-rotateplane {
+    0% {
+      -webkit-transform: perspective(120px);
+    }
+    50% {
+      -webkit-transform: perspective(120px) rotateY(180deg);
+    }
+    100% {
+      -webkit-transform: perspective(120px) rotateY(180deg) rotateX(180deg);
+    }
+  }
+
+  @keyframes sk-rotateplane {
+    0% {
+      transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+      -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+    }
+    50% {
+      transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+      -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+    }
+    100% {
+      transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+      -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+    }
+  }
+
+  .hide-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .hide-scroll {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}

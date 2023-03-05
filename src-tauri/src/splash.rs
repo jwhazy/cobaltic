@@ -1,67 +1,26 @@
-use downloader::Downloader;
-use log;
-use platform_dirs::AppDirs;
 use std::path::{Path, PathBuf};
+
+use downloader::Downloader;
+use log::{error, info};
 use tauri::{
     self,
     api::process::{Command, CommandEvent},
     Window,
 };
 
-use log::{error, info, warn};
-
 use crate::utils;
 
 #[tauri::command]
-pub async fn check() -> bool {
-    Path::new(&utils::app_data_directory()).exists().into()
-}
-
-#[tauri::command]
-pub async fn get() -> String {
-    PathBuf::from(&utils::app_data_directory())
-        .join(Path::new("splash.exe"))
-        .display()
-        .to_string()
-        .into()
-}
-
-#[tauri::command]
-pub async fn silent_kill() {
-    Command::new("taskkill")
-        .args(&["/F", "/IM", "splash.exe"])
-        .spawn()
-        .expect("Error while killing splash.exe");
-}
-
-#[tauri::command]
-pub async fn kill(window: Window) {
-    Command::new("taskkill")
-        .args(&["/F", "/IM", "splash.exe"])
-        .spawn()
-        .expect("Error while killing splash.exe");
-
-    warn!("Splash was manually cancelled/killed.");
-
-    window
-        .emit("splash", "dead")
-        .expect("Emitting failed - killing splash");
-}
-
-#[tauri::command]
 pub async fn start(window: Window, args: [String; 4]) {
-    // This is HORRIBLE code - please if you have suggestions make a PR or DM me.
+    let splash_location = utils::app_data_directory().join("splash.exe");
 
-    let splash_location: PathBuf =
-        PathBuf::from(&utils::app_data_directory()).join(Path::new("splash.exe"));
+    if !splash_location.exists() {
+        info!("Splash not found, downloading...");
 
-    if check().await {
         window
-            .emit("splash", "Splash not found. Downloading now.")
-            .expect("Splash not found. Emitting failed - downloading splash");
-        info!("Splash not found, downloading now.");
-
-        std::thread::spawn(|| download())
+            .emit("splash", Some("Splash not found, downloading..."))
+            .unwrap();
+        std::thread::spawn(|| download().expect("Failed to download splash.exe"))
             .join()
             .expect("Splash download panicked");
     }
@@ -96,13 +55,24 @@ pub async fn start(window: Window, args: [String; 4]) {
 }
 
 #[tauri::command]
-pub fn download() -> bool {
+pub fn kill(window: Window) {
+    let mut _child = Command::new("taskkill")
+        .args(&["/F", "/IM", "splash.exe"])
+        .spawn()
+        .expect("failed to kill splash");
+
+    window
+        .emit("splash", Some("Splash killed."))
+        .expect("splash message failed to send.");
+}
+
+pub fn download() -> Result<(), Box<dyn std::error::Error>> {
     info!("Starting Splash download");
-    let app_dirs = AppDirs::new(Some("Cobaltic"), true).unwrap();
+    let splash_location: PathBuf = PathBuf::from(&utils::app_data_directory());
 
     // https://github.com/hunger/downloader/blob/main/examples/tui_basic.rs
     let mut downloader = Downloader::builder()
-        .download_folder(&app_dirs.config_dir)
+        .download_folder(&splash_location)
         .user_agent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36")
         .parallel_requests(1)
         .build()
@@ -114,12 +84,10 @@ pub fn download() -> bool {
 
     let result = downloader.download(&[splash]).unwrap();
 
-    for r in result {
+    Ok(for r in result {
         match r {
             Err(e) => error!("Error occurred while downloading! {}", &e.to_string()),
             Ok(s) => error!("Download success: {}", &s),
         };
-    }
-
-    true
+    })
 }

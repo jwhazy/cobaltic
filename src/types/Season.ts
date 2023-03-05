@@ -1,4 +1,4 @@
-import Manifest from "./Manifest";
+import { Manifest } from "./Manifest";
 
 export type Season = {
   banner: string;
@@ -7,5 +7,3 @@ export type Season = {
   seasonName: string;
   shortName: string;
 };
-
-export default Season;

@@ -6,5 +6,3 @@ export type Manifest = {
   url: string;
   version?: string;
 };
-
-export default Manifest;

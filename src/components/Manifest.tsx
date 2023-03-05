@@ -1,34 +1,48 @@
-import log from "../utils/logger";
+import { useAtom } from "jotai";
+import { Check } from "lucide-react";
+import { Manifest as ManifestType } from "../types/Manifest";
+import clsxm from "../utils/clsxm";
+import { selectedManifest as selectedManifestAtom } from "../utils/state";
 
-export type Props = {
-  title: string;
-  subtitle: string;
-  icon: string;
-  banner: string;
-  onClick?: () => void;
-};
+const Manifest = ({ name, icon, version, id, url }: ManifestType) => {
+  const [selectedManifest, setSelectedManifest] = useAtom(selectedManifestAtom);
 
-function ManifestItem({ title, subtitle, onClick, icon }: Props) {
+  const onClick = () => {
+    if (selectedManifest?.id !== id) {
+      setSelectedManifest({ id, name, icon, version, url });
+    } else {
+      setSelectedManifest(undefined);
+    }
+  };
+
   return (
-    <div
-      className="ml-2 m-5 w-[540px] cursor-pointer border bg-opacity-10 hover:bg-opacity-25 bg-black text-white transition border-gray-700 placeholder-gray-400 hover:outline-none hover:ring-1 hover:ring-gray-300 hover:ring-opacity-50 shadow-sm disabled:text-gray-500 mt-1 flex items-center rounded-3xl"
-      onClick={() => {
-        log("info", `Manifest identifer: ${subtitle}`);
-        onClick?.();
-      }}
+    <button
+      className={clsxm(
+        "mt-2 flex w-full  cursor-pointer items-center justify-between rounded-xl p-4 transition-all hover:bg-black/30",
+        selectedManifest?.id === id && "bg-black/30"
+      )}
+      type="button"
+      onClick={onClick}
     >
-      <img
-        src={`/${icon || "c1s1p.jpg"}`}
-        height={96}
-        width={96}
-        className="rounded-l-3xl"
-        alt=""
-      />
-      <div className="pt-4 drop-shadow-md md:p-6 md:py-3">
-        <h3>{title}</h3>
-        <p className="text-gray-200">{subtitle}</p>
+      <div className="flex space-x-4">
+        <img
+          src={`/${icon || "c1s1p.jpg"}`}
+          height={48}
+          width={48}
+          className="h-16 w-16 rounded-xl"
+          alt=""
+        />
+        <div className="text-left">
+          <h3>{name}</h3>
+          <p className="text-truncate w-2/3">{version}</p>
+        </div>
       </div>
-    </div>
+      {selectedManifest?.id === id && (
+        <div className="flex">
+          <Check />
+        </div>
+      )}
+    </button>
   );
-}
-export default ManifestItem;
+};
+export default Manifest;

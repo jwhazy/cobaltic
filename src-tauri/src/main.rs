@@ -3,46 +3,62 @@
     windows_subsystem = "windows"
 )]
 
-use chrono::Utc;
-use log::info;
 use std::{fs, path::Path};
-use tauri_plugin_log::{fern::colors::ColoredLevelConfig, LogTarget, LoggerBuilder};
+
+use log::info;
+use tauri::Manager;
+use tauri_plugin_log::{fern::colors::ColoredLevelConfig, LogTarget};
+use window_shadows::set_shadow;
+//use window_vibrancy::apply_mica;
 
 mod splash;
 mod utils;
 
-fn main() {
-    let targets = [LogTarget::LogDir, LogTarget::Stdout, LogTarget::Webview];
-    let colors = ColoredLevelConfig::default();
+#[tauri::command]
+fn init_mica(app: tauri::AppHandle, window_title: String) -> Result<(), String> {
+    let window = app.get_window(&window_title).unwrap();
 
+    set_shadow(&window, true).unwrap();
+
+    // Experimental mica
+    // #[cfg(target_os = "windows")]
+    // apply_mica(&window).expect("Unsupported platform! 'apply_blur' is only supported on Windows");
+    Ok(())
+}
+
+fn main() {
     if !Path::exists(&utils::app_data_directory()) {
         fs::create_dir(&utils::app_data_directory().as_path()).expect("Create directory failed.");
     }
 
     tauri::Builder::default()
         .plugin(
-            LoggerBuilder::new()
-                .with_colors(colors)
-                .targets(targets)
+            tauri_plugin_log::Builder::default()
+                .targets([LogTarget::LogDir, LogTarget::Stdout, LogTarget::Webview])
+                .with_colors(ColoredLevelConfig::default())
                 .build(),
         )
-        .setup(|_app| {
-            info!("Cobaltic v2.0.2 starting at {:?}", Utc::now());
+        .invoke_handler(tauri::generate_handler![
+            init_mica,
+            utils::get_manifests,
+            utils::get_version,
+            utils::check_update,
+            splash::start,
+            splash::kill,
+        ])
+        .setup(|app| {
+            info!("Cobaltic v2.0.2 starting...");
+
+            let window = app.get_window("core").unwrap();
+            set_shadow(&window, true).unwrap();
+
+            // Experimental mica
+            // #[cfg(target_os = "windows")]
+            // apply_mica(&window)
+            //     .expect("Unsupported platform! 'apply_blur' is only supported on Windows");
+
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![
-            splash::check,
-            splash::kill,
-            splash::get,
-            splash::start,
-            splash::download,
-            splash::silent_kill,
-            utils::restart_app,
-            utils::get_manifests,
-            utils::check_update,
-            utils::check_directory_exists,
-            utils::get_version
-        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

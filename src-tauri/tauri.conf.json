@@ -1,27 +1,78 @@
 {
-  "$schema": "..\\node_modules/@tauri-apps/cli\\schema.json",
   "build": {
+    "beforeDevCommand": "yarn vite:dev",
     "beforeBuildCommand": "yarn vite:build",
-    "beforeDevCommand": "yarn vite",
-    "devPath": "http://localhost:5173",
-    "distDir": "../dist"
+    "devPath": "http://localhost:1420",
+    "distDir": "../dist",
+    "withGlobalTauri": false
   },
   "package": {
     "productName": "Cobaltic",
-    "version": "2.0.2"
+    "version": "2.0.0"
   },
   "tauri": {
     "allowlist": {
-      "all": true
+      "all": false,
+      "process": {
+        "all": false,
+        "exit": true,
+        "relaunch": false,
+        "relaunchDangerousAllowSymlinkMacos": false
+      },
+      "dialog": {
+        "all": false,
+        "ask": false,
+        "confirm": false,
+        "message": false,
+        "open": true,
+        "save": false
+      },
+      
+      "window": {
+        "all": false,
+        "center": false,
+        "close": false,
+        "create": true,
+        "hide": false,
+        "maximize": false,
+        "minimize": true,
+        "print": false,
+        "requestUserAttention": false,
+        "setAlwaysOnTop": false,
+        "setCursorGrab": false,
+        "setCursorIcon": false,
+        "setCursorPosition": false,
+        "setCursorVisible": false,
+        "setDecorations": false,
+        "setFocus": false,
+        "setFullscreen": false,
+        "setIcon": false,
+        "setIgnoreCursorEvents": false,
+        "setMaxSize": false,
+        "setMinSize": false,
+        "setPosition": false,
+        "setResizable": false,
+        "setSize": false,
+        "setSkipTaskbar": false,
+        "setTitle": false,
+        "show": false,
+        "startDragging": true,
+        "unmaximize": false,
+        "unminimize": false
+      },
+      "shell": {
+        "all": false,
+        "open": ""
+      }
     },
     "bundle": {
       "active": true,
       "category": "Utility",
       "copyright": "",
-
       "deb": {
         "depends": []
       },
+      "externalBin": [],
       "icon": [
         "icons/32x32.png",
         "icons/128x128.png",
@@ -50,17 +101,23 @@
     "security": {
       "csp": null
     },
+    "updater": {
+      "active": false
+    },
     "windows": [
       {
         "fullscreen": false,
-        "center": true,
-        "height": 785,
-        "minHeight": 500,
+        "height": 725,
         "resizable": true,
         "title": "Cobaltic",
-        "width": 1425,
-        "minWidth": 875,
-        "decorations": false
+        "width": 1380,
+        "titleBarStyle": "Transparent",
+        "label": "core",
+        "url": "/",
+        "decorations": false,
+        "transparent": true,
+        "alwaysOnTop": false,
+        "skipTaskbar": false
       }
     ]
   }

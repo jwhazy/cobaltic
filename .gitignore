@@ -9,9 +9,7 @@ lerna-debug.log*
 
 node_modules
 dist
-build
 dist-ssr
-build-ssr
 *.local
 
 # Editor directories and files
@@ -24,6 +22,3 @@ build-ssr
 *.njsproj
 *.sln
 *.sw?
-src-tauri/src/poordownload.rs
-
-*.key
