@@ -38,7 +38,7 @@ pub async fn check_update() -> Result<bool, String> {
 
     let json: Value = serde_json::from_str(&request).expect("Version failed");
 
-    let latest_version = json["dev"]["version"].to_string().replace('"', "");
+    let latest_version = json["prod"]["version"].to_string().replace('"', "");
 
     let self_version: &str = env!("CARGO_PKG_VERSION");
 
