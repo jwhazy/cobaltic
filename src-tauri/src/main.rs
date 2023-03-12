@@ -47,7 +47,7 @@ fn main() {
             splash::kill,
         ])
         .setup(|app| {
-            info!("Cobaltic v2.0.2 starting...");
+            info!("Cobaltic v2.0.0 starting...");
 
             let window = app.get_window("core").unwrap();
             set_shadow(&window, true).unwrap();
